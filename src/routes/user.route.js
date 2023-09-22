@@ -12,7 +12,7 @@ router.get('/', auth(Role.Admin,Role.Programmer), awaitHandlerFactory(userContro
 router.get('/id/:id', auth(), awaitHandlerFactory(userController.getById));
 router.get('/username/:username', auth(), awaitHandlerFactory(userController.getByUsername));
 router.get('/whoami', auth(), awaitHandlerFactory(userController.getCurrentUser));
-router.post('/', joiMiddleware(userSchemas.create), awaitHandlerFactory(userController.create));
+router.post('/',auth(Role.Admin, Role.Programmer), joiMiddleware(userSchemas.create), awaitHandlerFactory(userController.create));
 router.patch('/', auth(), joiMiddleware(userSchemas.update), awaitHandlerFactory(userController.update));
 router.delete('/id/:id', auth(Role.Admin), awaitHandlerFactory(userController.delete));
 

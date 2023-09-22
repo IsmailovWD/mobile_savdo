@@ -58,24 +58,28 @@ class UserController extends BaseController {
 
         await this.hashPassword(req);
         let { 
-            username,
+            phone_number,
             fullname,
             password,
-            role
+            sklad_id
         } = req.body;
-
-        const model = await UserModel.create({
-            username,
-            fullname,
-            password,
-            role
-        });
-
-        if (!model) {
-            throw new HttpException(500, req.mf('Something went wrong'));
+        try{
+            const model = await UserModel.create({
+                phone_number,
+                fullname,
+                password,
+                sklad_id,
+                role: 'Hodim'
+            });
+    
+            if (!model) {
+                throw new HttpException(500, req.mf('Something went wrong'));
+            }
+    
+            res.status(201).send(model);
+        }catch(e){
+            throw new HttpException(500, req.mf('Something went wrong'))
         }
-
-        res.status(201).send(model);
     };
 
     update = async (req, res, next) => {
@@ -86,6 +90,7 @@ class UserController extends BaseController {
             phone_number,
             fullname,
             password,
+            sklad_id
         } = req.body;
         let numberauth = phone_number
         numberauth = numberauth.replace(/\D/g, '');
@@ -123,6 +128,13 @@ class UserController extends BaseController {
         }
         model.fullname = fullname;
         if(password) model.password = password;
+        const skladAuth = await SkladModel.findOne({
+            where: {
+                id: sklad_id
+            }
+        })
+        if(!skladAuth) throw new HttpException(500, req.mf('Something went wrong'))
+        model.sklad_id = sklad_id
         model.save();
 
         res.send(model);

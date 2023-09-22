@@ -1,10 +1,8 @@
 const { Model } = require('sequelize');
 const Sequelize = require('sequelize');
-const sequelize = require('../db/db-sequelize');
+const db = require('../db/db-sequelize');
 class SkladModel extends Model {
-    toJSON () {
 
-    }
 }
 
 SkladModel.init({
@@ -20,7 +18,7 @@ SkladModel.init({
         unique: true
     },
 }, {
-  sequelize,
+  sequelize: db,
   modelName: 'SkladModel',
   tableName: 'sklad',
   timestamps: false,

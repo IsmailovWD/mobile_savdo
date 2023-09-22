@@ -4,7 +4,10 @@ const path = require("path");
 const cookieParser = require('cookie-parser')
 const i18n = require('./i18n.config')
 const errorMiddleware = require('../middleware/error.middleware');
+// router
 const userRouter = require('../routes/user.route');
+const skladRouter = require('../routes/sklad.route');
+// router
 const HttpException = require('../utils/HttpException.utils');
 
 module.exports = async function(app){
@@ -54,17 +57,17 @@ module.exports = async function(app){
                     if(req.get('mobile') == 'analytics'){
                         body.success = !body.error;
                         // if(error && status === 401){
-                        //     body.error_code = 405;
-                        // }
+                            //     body.error_code = 405;
+                            // }
+                        }
+                        res.statusCode = 200;
                     }
-                    res.statusCode = 200;
-                }
                 send.call(this, body);
             };
             next();
         });
         app.use(`/api/v1/users`, userRouter);
-            
+        app.use(`/api/v1/sklad`, skladRouter)
         // 404 error
         app.all('*', (req, res, next) => {
             const err = new HttpException(404, req.mf('Endpoint not found'));
