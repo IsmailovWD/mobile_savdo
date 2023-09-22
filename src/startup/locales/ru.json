@@ -1,0 +1,11 @@
+{
+	"name": "name",
+	"{name} is required": "{name} is required",
+	"{name} length must be [{min}:{max}]": "{name} length must be [{min}:{max}]",
+	"datetime1": "datetime1",
+	"{name} must be integer": "{name} must be integer",
+	"datetime2": "datetime2",
+	"This phone number is registered in the application": "Этот номер телефона зарегистрирован в приложении",
+	"The phone number is in the wrong format":"Номер телефона указан в неправильном формате",
+	"Incorrect login or password!":"Номер телефона или пароль неверный"
+}
