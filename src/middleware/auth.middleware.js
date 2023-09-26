@@ -41,7 +41,6 @@ const auth = (...roles) => {
                     }
                 ]
             });
-
             if (!user) {
                 throw new HttpException(401, req.mf('Authentication failed!'));
             }

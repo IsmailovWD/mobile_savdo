@@ -1,7 +1,14 @@
 const { Model } = require('sequelize');
 const Sequelize = require('sequelize');
 const sequelize = require('../db/db-sequelize');
-
+// other models
+const unityModel = require('./unity.model')
+const product_categoryModel = require('./productcategory.model')
+const manufacturModel = require('./manufactur.model')
+const brendModel = require('./brend.model')
+const producmodelModel = require('./product_model.model')
+const colorModel = require('./color.model')
+const AdditionnameModel = require('./additionname.model')
 class ProductModel extends Model {
 
 }
@@ -22,19 +29,19 @@ ProductModel.init({
     },
     shtrix_code: {
         type: Sequelize.DataTypes.STRING(32),
-        allowNull: false
+        allowNull: true
     },
     min_amount: {
         type: Sequelize.DataTypes.STRING(32),
-        allowNull: false
+        allowNull: true
     },
     pack: {
         type: Sequelize.DataTypes.STRING(32),
-        allowNull: false
+        allowNull: true
     },
     unity_id: {
         type: Sequelize.DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
             model: 'unity',
             key: 'id'
@@ -42,7 +49,7 @@ ProductModel.init({
     },
     category_id: {
         type: Sequelize.DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
             model: 'product_category',
             key: 'id',
@@ -50,7 +57,7 @@ ProductModel.init({
     },
     manufactur_id: {
         type: Sequelize.DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
             model: 'manufactur',
             key: 'id',
@@ -58,7 +65,7 @@ ProductModel.init({
     },
     brend_id: {
         type: Sequelize.DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
             model: 'brend',
             key: 'id',
@@ -66,23 +73,27 @@ ProductModel.init({
     },
     model_id: {
         type: Sequelize.DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
-            model: 'model',
+            model: 'product_model',
             key: 'id',
         }
     },
     color_id: {
         type: Sequelize.DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
             model: 'color',
             key: 'id',
         }
     },
-    addition_name: {
-        type: Sequelize.DataTypes.STRING(128),
-        allowNull: true
+    addition_id: {
+        type: Sequelize.DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+            model: 'addition_name',
+            key: 'id',
+        }
     }
 }, {
   sequelize,
@@ -91,4 +102,11 @@ ProductModel.init({
   timestamps: false,
   paranoid: true,
 });
+ProductModel.belongsTo(unityModel, {as: 'unity', foreignKey: 'unity_id'});
+ProductModel.belongsTo(product_categoryModel, {as: 'category', foreignKey: 'category_id'});
+ProductModel.belongsTo(manufacturModel, {as: 'manufactur', foreignKey: 'manufactur_id'});
+ProductModel.belongsTo(brendModel, {as: 'brend', foreignKey: 'brend_id'});
+ProductModel.belongsTo(producmodelModel, {as: 'modelproduct', foreignKey: 'model_id'});
+ProductModel.belongsTo(colorModel, {as: 'color', foreignKey: 'color_id'});
+ProductModel.belongsTo(AdditionnameModel, {as: 'addition', foreignKey: 'addition_id'});
 module.exports = ProductModel;

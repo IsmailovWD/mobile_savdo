@@ -22,19 +22,19 @@ module.exports = {
         },
         shtrix_code: {
           type: Sequelize.DataTypes.STRING(32),
-          allowNull: false
+          allowNull: true
         },
         min_amount: {
           type: Sequelize.DataTypes.STRING(32),
-          allowNull: false
+          allowNull: true
         },
         pack: {
           type: Sequelize.DataTypes.STRING(32),
-          allowNull: false
+          allowNull: true
         },
         unity_id: {
           type: Sequelize.DataTypes.INTEGER,
-          allowNull: false,
+          allowNull: true,
           references: {
             model: 'unity',
             key: 'id'
@@ -42,7 +42,7 @@ module.exports = {
         },
         category_id: {
           type: Sequelize.DataTypes.INTEGER,
-          allowNull: false,
+          allowNull: true,
           references: {
             model: 'product_category',
             key: 'id',
@@ -50,7 +50,7 @@ module.exports = {
         },
         manufactur_id: {
           type: Sequelize.DataTypes.INTEGER,
-          allowNull: false,
+          allowNull: true,
           references: {
             model: 'manufactur',
             key: 'id',
@@ -58,7 +58,7 @@ module.exports = {
         },
         brend_id: {
           type: Sequelize.DataTypes.INTEGER,
-          allowNull: false,
+          allowNull: true,
           references: {
             model: 'brend',
             key: 'id',
@@ -66,7 +66,7 @@ module.exports = {
         },
         model_id: {
           type: Sequelize.DataTypes.INTEGER,
-          allowNull: false,
+          allowNull: true,
           references: {
             model: 'product_model',
             key: 'id',
@@ -74,15 +74,19 @@ module.exports = {
         },
         color_id: {
           type: Sequelize.DataTypes.INTEGER,
-          allowNull: false,
+          allowNull: true,
           references: {
             model: 'color',
             key: 'id',
           }
         },
-        addition_name: {
-          type: Sequelize.DataTypes.STRING(128),
-          allowNull: true
+        addition_id: {
+          type: Sequelize.DataTypes.INTEGER,
+          allowNull: true,
+          references: {
+            model: 'addition_name',
+            key: 'id',
+          }
         }
       }, { transaction }
       );
