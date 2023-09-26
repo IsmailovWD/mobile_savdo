@@ -7,6 +7,13 @@ const errorMiddleware = require('../middleware/error.middleware');
 // router
 const userRouter = require('../routes/user.route');
 const skladRouter = require('../routes/sklad.route');
+const productcategoryRouter = require('../routes/productcategory.route');
+const productRouter = require('../routes/product.route');
+const brandRouter = require('../routes/brand.route');
+const colorRouter = require('../routes/color.route');
+const manufacturRouter = require('../routes/manufactur.route');
+const producmodelRouter = require('../routes/productmodel.route');
+const unitylRouter = require('../routes/unity.route');
 // router
 const HttpException = require('../utils/HttpException.utils');
 
@@ -68,6 +75,14 @@ module.exports = async function(app){
         });
         app.use(`/api/v1/users`, userRouter);
         app.use(`/api/v1/sklad`, skladRouter)
+        app.use(`/api/v1/productcategory`, productcategoryRouter)
+        app.use(`/api/v1/product`, productRouter)
+        app.use(`/api/v1/brand`, brandRouter)
+        app.use(`/api/v1/color`, colorRouter)
+        app.use(`/api/v1/manufactur`, manufacturRouter)
+        app.use(`/api/v1/productmodel`, producmodelRouter)
+        app.use(`/api/v1/unity`, unitylRouter)
+
         // 404 error
         app.all('*', (req, res, next) => {
             const err = new HttpException(404, req.mf('Endpoint not found'));
