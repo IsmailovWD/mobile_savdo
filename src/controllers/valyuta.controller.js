@@ -1,4 +1,4 @@
-const SkladModel = require('../models/sklad.model')
+const PaytypeModel = require('../models/valyuta.model')
 const HttpException = require('../utils/HttpException.utils');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -10,23 +10,19 @@ const moment = require('moment');
 
 // Include models
 
-class SkladController extends BaseController {
+class PaytypeController extends BaseController {
   getAll = async (req, res, next) => {
-    let query = {}
-    console.log(req.currentUser.sklad_id)
-    const role = req.currentUser.role
-    if(!role) throw new HttpException(401, req.mf("Unauthorized"))
-    if(role !== "Admin" && role !== "Programmer"){
-      query.id = req.currentUser.sklad_id
-    }
-    const model = await SkladModel.findAll({
-      where: query
+    const model = await PaytypeModel.findAll({
+      order: ['id']
     })
     res.send(model)
   }
   create = async (req, res) => {
+    const {name} = req.body
     try{
-      const model = await SkladModel.create(req.body)
+      const model = await PaytypeModel.create({
+        name
+      })
       if(!model) throw new HttpException(500, req.mf('Something went wrong'))
       res.status(201).send(model)
     }catch(err){
@@ -36,7 +32,7 @@ class SkladController extends BaseController {
   update = async (req, res) => {
     const id = req.params.id
     const {name} = req.body
-    const model = await SkladModel.findOne({
+    const model = await PaytypeModel.findOne({
       where: {id: id}
     })
     if(!model) throw new HttpException(404, req.mf('data not found'))
@@ -47,4 +43,4 @@ class SkladController extends BaseController {
 }
 
 
-module.exports = new SkladController;
+module.exports = new PaytypeController;

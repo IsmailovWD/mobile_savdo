@@ -8,17 +8,29 @@ module.exports = {
     const transaction = await queryInterface.sequelize.transaction();
     try {
       await queryInterface.bulkInsert(
-        'sklad', 
+        'valyuta', 
         [ 
           { 
-            name: 'Asosiy sklad'
+            id: 1,
+            name: "So'm"
+          },
+          { 
+            id: 2,
+            name: "Dollar"
           } 
         ], 
         { transaction }
       );
       
       // queryInterface.sequelize.query(
-      //   'UPDATE sklad SET id = 0 WHERE id = 1',
+      //   'UPDATE valyuta SET id = 1 WHERE `name` = "So\'m"',
+      //   {
+      //     type: Sequelize.QueryTypes.UPDATE
+      //   },
+      //   { transaction }
+      // );
+      // queryInterface.sequelize.query(
+      //   'UPDATE valyuta SET id = 2 WHERE name = `Dollar`',
       //   {
       //     type: Sequelize.QueryTypes.UPDATE
       //   },
@@ -26,7 +38,7 @@ module.exports = {
       // );
 
       // queryInterface.sequelize.query(
-      //   'ALTER TABLE sklad AUTO_INCREMENT = 0',
+      //   'ALTER TABLE valyuta AUTO_INCREMENT = 1',
       //   {
       //     type: Sequelize.QueryTypes.UPDATE
       //   },

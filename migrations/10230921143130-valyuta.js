@@ -5,7 +5,7 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     const transaction = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.createTable('sklad', {
+      await queryInterface.createTable('valyuta', {
         id: {
           autoIncrement: true,
           type: Sequelize.DataTypes.INTEGER,
@@ -17,14 +17,6 @@ module.exports = {
           allowNull: false,
           unique: true
         },
-        valyuta_id: {
-          type: Sequelize.DataTypes.INTEGER,
-          allowNull: true,
-          references: {
-            model: 'valyuta',
-            key: 'id'
-          }
-        }
       }, { transaction }
       );
 
@@ -38,7 +30,7 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     const transaction = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.dropTable('sklad', { transaction });
+      await queryInterface.dropTable('valyuta', { transaction });
       
       transaction.commit();
     } catch (errors) {

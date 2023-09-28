@@ -1,11 +1,11 @@
 const { Model } = require('sequelize');
 const Sequelize = require('sequelize');
 const db = require('../db/db-sequelize');
-class SkladModel extends Model {
+class ValyutaModel extends Model {
 
 }
 
-SkladModel.init({
+ValyutaModel.init({
     id: { 
         type: Sequelize.DataTypes.INTEGER, 
         primaryKey: true, 
@@ -16,21 +16,13 @@ SkladModel.init({
         type: Sequelize.DataTypes.STRING(25),
         allowNull: false,
         unique: true
-    },
-    valyuta_id: {
-        type: Sequelize.DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-            model: 'valyuta',
-            key: 'id'
-        }
     }
 }, {
   sequelize: db,
-  modelName: 'SkladModel',
-  tableName: 'sklad',
+  modelName: 'ValyutaModel',
+  tableName: 'valyuta',
   timestamps: false,
   paranoid: true,
 });
 
-module.exports = SkladModel;
+module.exports = ValyutaModel;

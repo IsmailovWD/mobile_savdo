@@ -8,30 +8,17 @@ module.exports = {
     const transaction = await queryInterface.sequelize.transaction();
     try {
       await queryInterface.bulkInsert(
-        'sklad', 
+        'pay_type', 
         [ 
           { 
-            name: 'Asosiy sklad'
+            name: "Naqt"
+          },
+          { 
+            name: "Plastik"
           } 
         ], 
         { transaction }
       );
-      
-      // queryInterface.sequelize.query(
-      //   'UPDATE sklad SET id = 0 WHERE id = 1',
-      //   {
-      //     type: Sequelize.QueryTypes.UPDATE
-      //   },
-      //   { transaction }
-      // );
-
-      // queryInterface.sequelize.query(
-      //   'ALTER TABLE sklad AUTO_INCREMENT = 0',
-      //   {
-      //     type: Sequelize.QueryTypes.UPDATE
-      //   },
-      //   { transaction }
-      // );
 
       transaction.commit();
     } catch (errors) {

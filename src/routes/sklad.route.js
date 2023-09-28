@@ -8,7 +8,7 @@ const joiMiddleware = require('../middleware/joi.middleware');
 const {sklaScheme} = require('../middleware/validators/skladValidator.middleware')
 
 router.get('/', auth(), awaitHandlerFactory(SkladController.getAll));
-router.post('/', auth(Role.Admin,Role.Programmer),joiMiddleware(sklaScheme.createUpdate), awaitHandlerFactory(SkladController.create));
-router.patch('/id/:id', auth(Role.Admin,Role.Programmer),joiMiddleware(sklaScheme.createUpdate), awaitHandlerFactory(SkladController.update));
+router.post('/', auth(Role.Admin,Role.Programmer),joiMiddleware(sklaScheme.create), awaitHandlerFactory(SkladController.create));
+router.patch('/id/:id', auth(Role.Admin,Role.Programmer),joiMiddleware(sklaScheme.update), awaitHandlerFactory(SkladController.update));
 
 module.exports = router;

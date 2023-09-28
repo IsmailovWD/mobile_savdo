@@ -101,21 +101,21 @@ class SkladController extends BaseController {
       const model = await ProductModel.create({
         name, 
         img,
-        category_id:category_id == '' ? null : parseInt(category_id), 
-        shtrix_code:shtrix_code == '' ? null : shtrix_code,
-        min_amount: min_amount == '' ? null : min_amount,
-        pack: pack == '' ? null : pack,
-        unity_id: unity_id == '' ? null : parseInt(unity_id),
-        manufactur_id: manufactur_id == '' ? null : parseInt(manufactur_id),
-        brend_id: brend_id == '' ? null : parseInt(brend_id),
-        model_id: model_id == '' ? null : parseInt(model_id),
-        color_id: color_id == '' ? null : parseInt(color_id),
-        addition_id: addition_id == '' ? null : parseInt(addition_id),
+        category_id:category_id == '0' ? null : parseInt(category_id), 
+        shtrix_code:shtrix_code == '0' ? null : shtrix_code,
+        min_amount: min_amount == '0' ? null : min_amount,
+        pack: pack == '0' ? null : pack,
+        unity_id: unity_id == '0' ? null : parseInt(unity_id),
+        manufactur_id: manufactur_id == '0' ? null : parseInt(manufactur_id),
+        brend_id: brend_id == '0' ? null : parseInt(brend_id),
+        model_id: model_id == '0' ? null : parseInt(model_id),
+        color_id: color_id == '0' ? null : parseInt(color_id),
+        addition_id: addition_id == '0' ? null : parseInt(addition_id),
       })
       if(!model) throw new HttpException(500, req.mf('Something went wrong'))
       res.status(201).send(model)
     }catch(err){
-      console.log(err)
+      console.log(`${err}`)
       await this.#remove_image(img)
       throw new HttpException(500, req.mf('Something went wrong'))
     }
@@ -145,16 +145,16 @@ class SkladController extends BaseController {
       await this.#remove_image(model.img)
       model.img = img
     }
-    model.category_id = (category_id == '' ? null : parseInt(category_id));
-    model.shtrix_code = (shtrix_code == '' ? null : shtrix_code);
-    model.min_amount = (min_amount == '' ? null : min_amount);
-    model.pack = (pack == '' ? null : pack);
-    model.unity_id = (unity_id == '' ? null : parseInt(unity_id));
-    model.manufactur_id = (manufactur_id == '' ? null : parseInt(manufactur_id));
-    model.brend_id = (brend_id == '' ? null : parseInt(brend_id));
-    model.model_id = (model_id == '' ? null : parseInt(model_id));
-    model.color_id = (color_id == '' ? null : parseInt(color_id));
-    model.addition_id = (addition_id == '' ? null : parseInt(addition_id));
+    model.category_id = (category_id == '0' ? null : parseInt(category_id));
+    model.shtrix_code = (shtrix_code == '0' ? null : shtrix_code);
+    model.min_amount = (min_amount == '0' ? null : min_amount);
+    model.pack = (pack == '0' ? null : pack);
+    model.unity_id = (unity_id == '0' ? null : parseInt(unity_id));
+    model.manufactur_id = (manufactur_id == '0' ? null : parseInt(manufactur_id));
+    model.brend_id = (brend_id == '0' ? null : parseInt(brend_id));
+    model.model_id = (model_id == '0' ? null : parseInt(model_id));
+    model.color_id = (color_id == '0' ? null : parseInt(color_id));
+    model.addition_id = (addition_id == '0' ? null : parseInt(addition_id));
     await model.save()
     res.send(model)
   }
