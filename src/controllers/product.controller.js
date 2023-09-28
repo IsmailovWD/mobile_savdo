@@ -102,9 +102,9 @@ class SkladController extends BaseController {
         name, 
         img,
         category_id:category_id == '0' ? null : parseInt(category_id), 
-        shtrix_code:shtrix_code == '0' ? null : shtrix_code,
-        min_amount: min_amount == '0' ? null : min_amount,
-        pack: pack == '0' ? null : pack,
+        shtrix_code:shtrix_code == '' ? null : shtrix_code,
+        min_amount: min_amount == '' ? null : min_amount,
+        pack: pack == '' ? null : pack,
         unity_id: unity_id == '0' ? null : parseInt(unity_id),
         manufactur_id: manufactur_id == '0' ? null : parseInt(manufactur_id),
         brend_id: brend_id == '0' ? null : parseInt(brend_id),
@@ -146,9 +146,9 @@ class SkladController extends BaseController {
       model.img = img
     }
     model.category_id = (category_id == '0' ? null : parseInt(category_id));
-    model.shtrix_code = (shtrix_code == '0' ? null : shtrix_code);
-    model.min_amount = (min_amount == '0' ? null : min_amount);
-    model.pack = (pack == '0' ? null : pack);
+    model.shtrix_code = (shtrix_code == '' ? null : shtrix_code);
+    model.min_amount = (min_amount == '' ? null : min_amount);
+    model.pack = (pack == '' ? null : pack);
     model.unity_id = (unity_id == '0' ? null : parseInt(unity_id));
     model.manufactur_id = (manufactur_id == '0' ? null : parseInt(manufactur_id));
     model.brend_id = (brend_id == '0' ? null : parseInt(brend_id));
