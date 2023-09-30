@@ -39,5 +39,6 @@ let upload = multer({
 router.get('/', auth(), awaitHandlerFactory(ProductController.getAll));
 router.post('/', auth(Role.Admin,Role.Programmer), upload, joiMiddleware(productScheme.create), awaitHandlerFactory(ProductController.create));
 router.patch('/id/:id', auth(Role.Admin,Role.Programmer), upload, joiMiddleware(productScheme.update), awaitHandlerFactory(ProductController.update));
+router.get('/id/:id', auth(Role.Admin,Role.Programmer), awaitHandlerFactory(ProductController.getById))
 
 module.exports = router;

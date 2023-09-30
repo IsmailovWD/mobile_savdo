@@ -56,7 +56,7 @@ module.exports = {
             key: 'id',
           }
         },
-        brend_id: {
+        brand_id: {
           type: Sequelize.DataTypes.INTEGER,
           allowNull: true,
           references: {
@@ -85,6 +85,14 @@ module.exports = {
           allowNull: true,
           references: {
             model: 'addition_name',
+            key: 'id',
+          }
+        },
+        sklad_id: {
+          type: Sequelize.DataTypes.INTEGER,
+          allowNull: true,
+          references: {
+            model:'sklad',
             key: 'id',
           }
         }
