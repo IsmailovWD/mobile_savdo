@@ -19,6 +19,7 @@ const valyutaRouter = require('../routes/valyuta.route');
 const kursRouter = require('../routes/kurs.route');
 const firmaRouter = require('../routes/firma.route')
 const kontragentRouter = require('../routes/kontragent.route')
+const prixodRouter = require('../routes/prixod.route')
 // router
 const HttpException = require('../utils/HttpException.utils');
 
@@ -92,6 +93,7 @@ module.exports = async function(app){
         app.use(`/api/v1/kurs`, kursRouter)
         app.use(`/api/v1/firma`, firmaRouter);
         app.use(`/api/v1/kontragent`, kontragentRouter)
+        app.use(`/api/v1/prixod`, prixodRouter)
 
         app.use(`/api/v1/`, express.static('uploads'))
         // 404 error

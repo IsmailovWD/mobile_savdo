@@ -75,6 +75,10 @@ SeriesModel.init({
         type: Sequelize.DataTypes.INTEGER,
         allowNull: true,
         defaultValue: 1
+    },
+    supplier_id: {
+        type: Sequelize.DataTypes.INTEGER,
+        allowNull: true,
     }
 }, {
   sequelize,

@@ -19,6 +19,8 @@ const colorModel = require('../models/color.model');
 const AdditionnameModel = require('../models/additionname.model')
 const skladModel = require('../models/sklad.model');
 const seriesModel = require('../models/series.model');
+const ProductRegisterModel = require('../models/productRegister.model');
+const PriceRegisterModel = require('../models/priceRegister.model')
 class SkladController extends BaseController {
   getAll = async (req, res, next) => {
     let query = {}
@@ -220,6 +222,70 @@ class SkladController extends BaseController {
       }
       console.log(`Fayl muvaffaqiyatli o'chirildi: ${img}`);
     });
+  }
+  findOrCreateSeries = async (
+    datetime, product_id, sklad_id, 
+    delivery_price, prixod_price, optom_price, chakana_price, 
+    doc_id, doc_type, chakana_dollar_price = 0, optom_dollar_price = 0, price_type = 1, supplier_id = null) => {
+
+    let [model, new_model] =  await seriesModel.findOrCreate({
+        where:{
+            datetime: datetime,
+            product_id: product_id, 
+            sklad_id: sklad_id, 
+            delivery_price: delivery_price,
+            prixod_price: prixod_price,
+            optom_price: optom_price,
+            chakana_price: chakana_price,
+            doc_id : doc_id,
+            doc_type: doc_type, 
+            chakana_dollar_price, 
+            optom_dollar_price,
+            price_type,
+            supplier_id
+        }
+    });
+
+    return model;
+  }
+  writeProductRegister = async(datetime, doc_id, sklad_id, product_id, series_id, count, type, doc_type, comment = null) => {
+    let model = await ProductRegisterModel.create({
+        datetime: datetime,
+        doc_id : doc_id,
+        sklad_id : sklad_id,
+        product_id : product_id,
+        series_id : series_id, 
+        count : count,
+        type: type,
+        doc_type : doc_type,
+        comment
+    });
+    return model;
+  }
+  writePriceRegister = async (
+    datetime, product_id, series_id, sklad_id,
+    body_price, chakana_price, optom_price, 
+    doc_id, doc_type, chakana_dollar_price = 0, optom_dollar_price = 0, 
+    delivery_price = 0, price_type = 1) => {
+    let [model, new_model] =  await PriceRegisterModel.findOrCreate({
+        where:{
+            datetime: datetime,
+            product_id: product_id, 
+            series_id: series_id, 
+            sklad_id: sklad_id, 
+            body_price: body_price,
+            optom_price: optom_price,
+            chakana_price: chakana_price,
+            doc_id : doc_id,
+            doc_type: doc_type, 
+            chakana_dollar_price,
+            optom_dollar_price,
+            delivery_price,
+            price_type
+        }
+    });
+
+    return model;
   }
 }
 

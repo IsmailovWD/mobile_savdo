@@ -14,7 +14,6 @@ const auth = (...roles) => {
             if (!authHeader || !authHeader.startsWith(bearer)) {
                 throw new HttpException(401, req.mf('Access denied. No credentials sent!'));
             }
-
             const token = authHeader.replace(bearer, '');
 
             // Verify Token
@@ -41,6 +40,7 @@ const auth = (...roles) => {
                     }
                 ]
             });
+            console.log(user);
             if (!user) {
                 throw new HttpException(401, req.mf('Authentication failed!'));
             }

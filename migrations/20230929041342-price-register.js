@@ -5,7 +5,7 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     const transaction = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.createTable('series', {
+      await queryInterface.createTable('price_register', {
         id: {
           autoIncrement: true,
           type: Sequelize.DataTypes.INTEGER,
@@ -14,16 +14,34 @@ module.exports = {
         },
         datetime: {
           type: Sequelize.DataTypes.INTEGER,
-          allowNull: true
+          allowNull: false
+        },
+        doc_id: {
+          type: Sequelize.DataTypes.INTEGER,
+          allowNull: false
+        },
+        doc_type: {
+          type: Sequelize.DataTypes.STRING(20),
+          allowNull: false
         },
         product_id: {
           type: Sequelize.DataTypes.INTEGER,
-          allowNull: true,
+          allowNull: false,
           references: {
             model: 'product',
             key: 'id'
           },
-          onDelete: 'RESTRICT',
+          onDelete: 'CASCADE',
+          onUpdate: 'CASCADE',
+        },
+        series_id: {
+          type: Sequelize.DataTypes.INTEGER,
+          allowNull: true,
+          references: {
+            model: 'series',
+            key: 'id'
+          },
+          onDelete: 'CASCADE',
           onUpdate: 'CASCADE',
         },
         sklad_id: {
@@ -36,30 +54,20 @@ module.exports = {
           onDelete: 'RESTRICT',
           onUpdate: 'CASCADE',
         },
-        delivery_price: {
+        chakana_price: {
           type: Sequelize.DataTypes.DECIMAL(17,3),
-          allowNull: true
-        },
-        prixod_price: {
-          type: Sequelize.DataTypes.DECIMAL(17,3),
-          allowNull: true
+          allowNull: true,
+          defaultValue: 0.000
         },
         optom_price: {
           type: Sequelize.DataTypes.DECIMAL(17,3),
-          allowNull: true
-        },
-        chakana_price: {
-          type: Sequelize.DataTypes.DECIMAL(17,3),
-          allowNull: true
-        },
-        doc_id: {
-          type: Sequelize.DataTypes.INTEGER,
           allowNull: true,
-          defaultValue: 0
+          defaultValue: 0.000
         },
-        doc_type: {
-          type: Sequelize.DataTypes.STRING(20),
-          allowNull: false
+        body_price: {
+          type: Sequelize.DataTypes.DECIMAL(17,3),
+          allowNull: true,
+          defaultValue: 0.000
         },
         chakana_dollar_price: {
           type: Sequelize.DataTypes.DECIMAL(17,3),
@@ -76,17 +84,27 @@ module.exports = {
           allowNull: true,
           defaultValue: 1
         },
-        supplier_id: {
-          type: Sequelize.DataTypes.INTEGER,
+        delivery_price: {
+          type: Sequelize.DataTypes.DECIMAL(17,3),
           allowNull: true,
+          defaultValue: 0.000
         }
       }, { transaction }
       );
 
       await queryInterface.addIndex(
-        'series',
+        'price_register',
         {
-          name: 'idx-series-doc',
+          name: 'idx-price_register-datetime',
+          fields: ['datetime'],
+          transaction
+        }
+      );
+
+      await queryInterface.addIndex(
+        'price_register',
+        {
+          name: 'idx-price_register-doc',
           fields: ['doc_id', 'doc_type'],
           transaction
         }
@@ -103,12 +121,18 @@ module.exports = {
     const transaction = await queryInterface.sequelize.transaction();
     try {
       await queryInterface.removeIndex(
-        'series',
-        'idx-series-doc', 
+        'price_register',
+        'idx-price_register-doc', 
         { transaction }
       );
 
-      await queryInterface.dropTable('series', { transaction });
+      await queryInterface.removeIndex(
+        'price_register',
+        'idx-price_register-datetime', 
+        { transaction }
+      );
+
+      await queryInterface.dropTable('price_register', { transaction });
       
       transaction.commit();
     } catch (errors) {
