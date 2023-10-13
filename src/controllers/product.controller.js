@@ -27,6 +27,12 @@ class SkladController extends BaseController {
     if(req.query.sklad_id){
       query.sklad_id = req.query.sklad_id
     }
+    if(req.currentUser.role !== "Admin" && req.currentUser.role !== "Programmer"){
+      query.sklad_id = req.currentUser.sklad_id
+    }
+    if(req.query.category_id){
+      query.category_id = req.query.category_id
+    }
     const model = await ProductModel.findAll({
       attributes: [
         'id',
@@ -35,13 +41,13 @@ class SkladController extends BaseController {
         'shtrix_code',
         'min_amount',
         "pack",
-        // 'unity_id',
-        // 'category_id',
-        // "manufactur_id",
-        // "brend_id",
-        // "model_id",
-        // "color_id",
-        // "addition_id",
+        'unity_id',
+        'category_id',
+        "manufactur_id",
+        "brend_id",
+        "model_id",
+        "color_id",
+        "addition_id",
         // [literal('unity.name'), 'unity_name'],
         // [literal('category.name'), 'category_name'],
         // [literal('manufactur.name'), 'manufactur_name'],
@@ -51,7 +57,7 @@ class SkladController extends BaseController {
         // [literal('addition.name'), 'addition_name'],
         // [literal('sklad.name'), 'sklad_name'],
       ],
-      // include: [
+      include: [
       //   {
       //     model: unityModel,
       //     as: 'unity',
@@ -92,7 +98,11 @@ class SkladController extends BaseController {
       //     as: 'sklad',
       //     attributes: []
       //   }
-      // ],
+        {
+          model: seriesModel,
+          as: 'series'
+        }
+      ],
       where: query
     })
     res.send(model)
