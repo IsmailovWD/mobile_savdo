@@ -44,7 +44,7 @@ class SkladController extends BaseController {
         'unity_id',
         'category_id',
         "manufactur_id",
-        "brend_id",
+        "brand_id",
         "model_id",
         "color_id",
         "addition_id",
@@ -117,7 +117,7 @@ class SkladController extends BaseController {
       pack,
       unity_id,
       manufactur_id,
-      brend_id,
+      brand_id,
       model_id,
       color_id,
       addition_id,
@@ -133,7 +133,7 @@ class SkladController extends BaseController {
         pack: pack == '' ? null : pack,
         unity_id: unity_id == '0' ? null : parseInt(unity_id),
         manufactur_id: manufactur_id == '0' ? null : parseInt(manufactur_id),
-        brend_id: brend_id == '0' ? null : parseInt(brend_id),
+        brand_id: brand_id == '0' ? null : parseInt(brand_id),
         model_id: model_id == '0' ? null : parseInt(model_id),
         color_id: color_id == '0' ? null : parseInt(color_id),
         addition_id: addition_id == '0' ? null : parseInt(addition_id),
@@ -158,7 +158,7 @@ class SkladController extends BaseController {
       pack,
       unity_id,
       manufactur_id,
-      brend_id,
+      brand_id,
       model_id,
       color_id,
       addition_id,
@@ -179,7 +179,7 @@ class SkladController extends BaseController {
     model.pack = (pack == '' ? null : pack);
     model.unity_id = (unity_id == '0' ? null : parseInt(unity_id));
     model.manufactur_id = (manufactur_id == '0' ? null : parseInt(manufactur_id));
-    model.brend_id = (brend_id == '0' ? null : parseInt(brend_id));
+    model.brand_id = (brand_id == '0' ? null : parseInt(brand_id));
     model.model_id = (model_id == '0' ? null : parseInt(model_id));
     model.color_id = (color_id == '0' ? null : parseInt(color_id));
     model.addition_id = (addition_id == '0' ? null : parseInt(addition_id));
