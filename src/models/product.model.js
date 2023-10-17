@@ -11,6 +11,7 @@ const colorModel = require('./color.model')
 const AdditionnameModel = require('./additionname.model')
 const SkladModel = require('./sklad.model')
 const seriesModel = require('./series.model')
+const ProductRegisterModel = require('./productRegister.model')
 class ProductModel extends Model {
 
 }
@@ -121,4 +122,5 @@ ProductModel.belongsTo(colorModel, {as: 'color', foreignKey: 'color_id'});
 ProductModel.belongsTo(AdditionnameModel, {as: 'addition', foreignKey: 'addition_id'});
 ProductModel.belongsTo(SkladModel, {as: 'sklad', foreignKey: 'sklad_id'});
 ProductModel.hasOne(seriesModel, {as: 'series', foreignKey: 'product_id'});
+ProductModel.hasMany(ProductRegisterModel, {as: 'product_register', foreignKey: 'product_id'});
 module.exports = ProductModel;

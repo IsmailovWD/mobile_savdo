@@ -21,6 +21,7 @@ const skladModel = require('../models/sklad.model');
 const seriesModel = require('../models/series.model');
 const ProductRegisterModel = require('../models/productRegister.model');
 const PriceRegisterModel = require('../models/priceRegister.model')
+
 class SkladController extends BaseController {
   getAll = async (req, res, next) => {
     let query = {}
@@ -48,6 +49,13 @@ class SkladController extends BaseController {
         "model_id",
         "color_id",
         "addition_id",
+        "sklad_id",
+        [literal("SUM( \
+          CASE \
+            WHEN `product_register`.`doc_type` = 'Кирим' THEN `product_register`.`count`\
+            WHEN `product_register`.`doc_type` = 'Чиқим' THEN -`product_register`.`count`\
+            ELSE 0 END\
+        )"), 'qoldiq']
         // [literal('unity.name'), 'unity_name'],
         // [literal('category.name'), 'category_name'],
         // [literal('manufactur.name'), 'manufactur_name'],
@@ -58,6 +66,11 @@ class SkladController extends BaseController {
         // [literal('sklad.name'), 'sklad_name'],
       ],
       include: [
+        {
+          model: ProductRegisterModel,
+          as: 'product_register',
+          attributes: []
+        },
       //   {
       //     model: unityModel,
       //     as: 'unity',
@@ -98,14 +111,27 @@ class SkladController extends BaseController {
       //     as: 'sklad',
       //     attributes: []
       //   }
-        {
-          model: seriesModel,
-          as: 'series'
-        }
+        // {
+        //   model: seriesModel,
+        //   as: 'series'
+        // }
       ],
-      where: query
+      where: query,
+      group: ['id']
     })
-    res.send(model)
+    const arr = []
+    for (let i = 0; i < model.length; i++) {
+      const md = model[i].get({plain: true})
+      const series = await seriesModel.findOne({
+        where: {
+          product_id: md.id
+        },
+        order: [['id', 'desc']]
+      })
+      md.series = series.get({plain: true})
+      arr.push(md)
+    }
+    await res.send(arr)
   }
   create = async (req, res) => {
     const {
