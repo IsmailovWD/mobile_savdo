@@ -33,7 +33,7 @@ class SkladController extends BaseController {
     }
     if(req.query.category_id){
       query.category_id = req.query.category_id
-    }z
+    }
     const model = await ProductModel.findAll({
       attributes: [
         'id',
