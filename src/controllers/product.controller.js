@@ -33,7 +33,7 @@ class SkladController extends BaseController {
     }
     if(req.query.category_id){
       query.category_id = req.query.category_id
-    }
+    }z
     const model = await ProductModel.findAll({
       attributes: [
         'id',
@@ -128,7 +128,11 @@ class SkladController extends BaseController {
         },
         order: [['id', 'desc']]
       })
-      md.series = series.get({plain: true})
+      if(series){
+        md.series = series.get({plain: true})
+      }else{
+        md.series = null
+      }
       arr.push(md)
     }
     await res.send(arr)
