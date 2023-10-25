@@ -90,11 +90,11 @@ RasxodModel.init({
     type: Sequelize.DataTypes.INTEGER,
     allowNull: true
   },
-  number: {
-    type: Sequelize.DataTypes.INTEGER,
-    allowNull: true,
-    unique: true
-  },
+  // number: {
+  //   type: Sequelize.DataTypes.INTEGER,
+  //   allowNull: true,
+  //   unique: true
+  // },
   dollar_rate: {
     type: Sequelize.DataTypes.DECIMAL(17, 3),
     allowNull: true,
