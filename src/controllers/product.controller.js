@@ -188,7 +188,7 @@ class SkladController extends BaseController {
     const arr = []
     for (let i = 0; i < model.length; i++) {
       const md = model[i].get({ plain: true })
-      if(md.qoldiq >= 0){
+      if(md.qoldiq > 0){
         const series = await seriesModel.findOne({
           where: {
             product_id: md.id
