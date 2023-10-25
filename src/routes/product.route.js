@@ -37,6 +37,7 @@ let upload = multer({
 }).single('img');
 
 router.get('/', auth(), awaitHandlerFactory(ProductController.getAll));
+router.get('/residual', auth(), awaitHandlerFactory(ProductController.getAll_ostatok));
 router.post('/', auth(Role.Admin,Role.Programmer), upload, joiMiddleware(productScheme.create), awaitHandlerFactory(ProductController.create));
 router.patch('/id/:id', auth(Role.Admin,Role.Programmer), upload, joiMiddleware(productScheme.update), awaitHandlerFactory(ProductController.update));
 router.get('/id/:id', auth(Role.Admin,Role.Programmer), awaitHandlerFactory(ProductController.getById))

@@ -1,9 +1,11 @@
 const { Model } = require('sequelize');
 const Sequelize = require('sequelize');
 const sequelize = require('../db/db-sequelize');
-// const ProductModel = require('../models/product.model');
-// const SeriesModel = require('../models/series.model');
-// const SkladModel = require('../models/sklad.model');
+
+const ProductModel = require('./product.model');
+const SeriesModel = require('../models/series.model');
+const SkladModel = require('../models/sklad.model');
+
 class ProductRegisterModel extends Model {}
 
 ProductRegisterModel.init({
@@ -67,9 +69,11 @@ ProductRegisterModel.init({
   tableName: 'product_register',
   timestamps: false,
 });
-// ProductRegisterModel.belongsTo(SkladModel, {as: 'sklad', foreignKey: 'sklad_id'});
+
+ProductRegisterModel.belongsTo(SkladModel, {as: 'sklad', foreignKey: 'sklad_id'});
 // ProductRegisterModel.belongsTo(ProductModel, {as: 'product', foreignKey: 'product_id'});
 // ProductModel.hasMany(ProductRegisterModel, {as: 'product_register', foreignKey: 'product_id'});
-// ProductRegisterModel.belongsTo(SeriesModel, {as: 'series', foreignKey: 'series_id'});
-// SeriesModel.hasMany(ProductRegisterModel, {as: 'product_register', foreignKey: 'series_id'});
+ProductRegisterModel.belongsTo(SeriesModel, {as: 'series', foreignKey: 'series_id'});
+SeriesModel.hasMany(ProductRegisterModel, {as: 'product_register', foreignKey: 'series_id'});
+
 module.exports = ProductRegisterModel;
