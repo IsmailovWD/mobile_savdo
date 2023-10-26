@@ -52,7 +52,7 @@ class RasxodController extends DocNumberController {
                 "plastic_summa",
                 "count_all",
                 "daily_number",
-                "number",
+                // "number",
                 "dollar_rate",
                 "pay_type_id",
                 "dollar_summa",
