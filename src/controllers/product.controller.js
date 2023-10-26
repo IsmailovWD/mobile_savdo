@@ -54,20 +54,14 @@ class SkladController extends BaseController {
         "color_id",
         "addition_id",
         "sklad_id",
-        // [literal("SUM( \
-        //   CASE \
-        //     WHEN `product_register`.`doc_type` = 'Кирим' THEN `product_register`.`count`\
-        //     WHEN `product_register`.`doc_type` = 'Чиқим' THEN -`product_register`.`count`\
-        //     ELSE 0 END\
-        // )"), 'qoldiq']
-        // [literal('unity.name'), 'unity_name'],
-        // [literal('category.name'), 'category_name'],
-        // [literal('manufactur.name'), 'manufactur_name'],
-        // [literal('brand.name'), 'brand_name'],
-        // [literal('modelproduct.name'), 'model_name'],
-        // [literal('color.name'), 'color_name'],
-        // [literal('addition.name'), 'addition_name'],
-        // [literal('sklad.name'), 'sklad_name'],
+        [literal('unity.name'), 'unity_name'],
+        [literal('category.name'), 'category_name'],
+        [literal('manufactur.name'), 'manufactur_name'],
+        [literal('brand.name'), 'brand_name'],
+        [literal('modelproduct.name'), 'model_name'],
+        [literal('color.name'), 'color_name'],
+        [literal('addition.name'), 'addition_name'],
+        [literal('sklad.name'), 'sklad_name'],
       ],
       include: [
         {
@@ -75,70 +69,50 @@ class SkladController extends BaseController {
           as: 'product_register',
           attributes: []
         },
-        //   {
-        //     model: unityModel,
-        //     as: 'unity',
-        //     attributes: []
-        //   },
-        //   {
-        //     model: product_categoryModel,
-        //     as: 'category',
-        //     attributes: []
-        //   },
-        //   {
-        //     model: manufacturModel,
-        //     as: 'manufactur',
-        //     attributes: []
-        //   },
-        //   {
-        //     model: brendModel,
-        //     as: 'brand',
-        //     attributes: []
-        //   },
-        //   {
-        //     model: productmodelModel,
-        //     as: 'modelproduct',
-        //     attributes: []
-        //   },
-        //   {
-        //     model: colorModel,
-        //     as: 'color',
-        //     attributes: []
-        //   },
-        //   {
-        //     model: AdditionnameModel,
-        //     as: 'addition',
-        //     attributes: []
-        //   },
-        //   {
-        //     model: skladModel,
-        //     as: 'sklad',
-        //     attributes: []
-        //   }
-        // {
-        //   model: seriesModel,
-        //   as: 'series'
-        // }
+        {
+          model: unityModel,
+          as: 'unity',
+          attributes: []
+        },
+        {
+          model: product_categoryModel,
+          as: 'category',
+          attributes: []
+        },
+        {
+          model: manufacturModel,
+          as: 'manufactur',
+          attributes: []
+        },
+        {
+          model: brendModel,
+          as: 'brand',
+          attributes: []
+        },
+        {
+          model: productmodelModel,
+          as: 'modelproduct',
+          attributes: []
+        },
+        {
+          model: colorModel,
+          as: 'color',
+          attributes: []
+        },
+        {
+          model: AdditionnameModel,
+          as: 'addition',
+          attributes: []
+        },
+        {
+          model: skladModel,
+          as: 'sklad',
+          attributes: []
+        }
       ],
       where: query,
       group: ['id']
     })
-    const arr = []
-    // for (let i = 0; i < model.length; i++) {
-    //   const md = model[i].get({ plain: true })
-    //   const series = await seriesModel.findOne({
-    //     where: {
-    //       product_id: md.id
-    //     },
-    //     order: [['id', 'desc']]
-    //   })
-    //   if (series) {
-    //     md.series = series.get({ plain: true })
-    //   } else {
-    //     md.series = null
-    //   }
-    //   arr.push(md)
-    // }
     await res.send(model)
   }
   getAll_ostatok = async (req, res, next) => {
@@ -188,7 +162,7 @@ class SkladController extends BaseController {
     const arr = []
     for (let i = 0; i < model.length; i++) {
       const md = model[i].get({ plain: true })
-      if(md.qoldiq > 0){
+      if (md.qoldiq > 0) {
         const series = await seriesModel.findOne({
           where: {
             product_id: md.id
@@ -501,38 +475,38 @@ class SkladController extends BaseController {
     });
     return model;
   }
-  getBalanceLastSeries = async (product_id, sklad_id, datetime) =>{
+  getBalanceLastSeries = async (product_id, sklad_id, datetime) => {
     let model = await ProductRegisterModel.findOne({
-        attributes: [
-            'product_id', 'series_id', 
-            // [sequelize.literal('series.prixod_price'), 'body_price'],
-            [sequelize.literal('sum(`count` * power(-1, `type` + 1))'), 'balance'],
-        ],
-        include: [
-            {model: SeriesModel, as: 'series', attributes: ['prixod_price']}
-        ],
-        where:{
-            product_id: product_id,
-            sklad_id: sklad_id,
-            //datetime:{ [Op.lt]: datetime }
-        },
-        order : [ ['datetime', 'DESC'] ],
+      attributes: [
+        'product_id', 'series_id',
+        // [sequelize.literal('series.prixod_price'), 'body_price'],
+        [sequelize.literal('sum(`count` * power(-1, `type` + 1))'), 'balance'],
+      ],
+      include: [
+        { model: SeriesModel, as: 'series', attributes: ['prixod_price'] }
+      ],
+      where: {
+        product_id: product_id,
+        sklad_id: sklad_id,
+        //datetime:{ [Op.lt]: datetime }
+      },
+      order: [['datetime', 'DESC']],
     });
-    if(model.balance == null) {
-        let last_series = await SeriesModel.findOne({
-            where:{
-                product_id: product_id,
-                sklad_id: sklad_id,
-                //datetime:{ [Op.lte]: datetime }
-            },
-            order : [ ['datetime', 'DESC'] ],
-        })
-        if(last_series == null) return null;
+    if (model.balance == null) {
+      let last_series = await SeriesModel.findOne({
+        where: {
+          product_id: product_id,
+          sklad_id: sklad_id,
+          //datetime:{ [Op.lte]: datetime }
+        },
+        order: [['datetime', 'DESC']],
+      })
+      if (last_series == null) return null;
 
-        return {product_id: product_id, series_id: last_series.id, balance: 0, body_price: last_series.prixod_price, series: {prixod_price: 0}}
+      return { product_id: product_id, series_id: last_series.id, balance: 0, body_price: last_series.prixod_price, series: { prixod_price: 0 } }
     };
     return model;
-};
+  };
 }
 
 
