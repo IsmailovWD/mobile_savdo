@@ -17,7 +17,7 @@ const priceTypeUtils = require('../utils/priceType.utils');
 const payTypeUtils = require('../utils/payType.utils');
 const UserModel = require('../models/user.model');
 const {ValidationError, literal} = require('sequelize');
-// const actionTypeUtils = require('../utils/actionType.utils');
+const actionTypeUtils = require('../utils/actionType.utils');
 
 /******************************************************************************
  *                              Prixod Controller
