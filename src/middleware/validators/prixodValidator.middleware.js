@@ -13,7 +13,7 @@ exports.prixodscheme = {
         debit_summa: Joi.number().required(),
         count_all: Joi.number().required(),
         comment: Joi.string().required(),
-        prixod_table: Joi.array().required().length(1).items(Joi.object({
+        prixod_table: Joi.array().required().min(1).items(Joi.object({
             product_id: Joi.number().required(),
             count: Joi.number().required(),
             current_balance: Joi.number().required(),
