@@ -19,7 +19,7 @@ exports.rasxodScheme = {
         dollar_summa: Joi.number().required(),
         refund_money: Joi.number().required(),
         refund_money_dollar: Joi.number().required(),
-        rasxod_table: Joi.array().required().length(1).items(Joi.object({
+        rasxod_table: Joi.array().required().min(1).items(Joi.object({
             product_id: Joi.number().required(),
             current_balance: Joi.number().required(),
             count: Joi.number().required(),
