@@ -1,6 +1,7 @@
 const { Model } = require('sequelize')
 const Sequelize = require('sequelize')
 const sequelize = require('../db/db-sequelize')
+const ProductModel = require('./product.model')
 
 class PrixodtableModel extends Model {}
 
@@ -112,4 +113,5 @@ PrixodtableModel.init({
     timestamps: false,
     paranoid: true,
 })
+PrixodtableModel.belongsTo(ProductModel, {as: 'product', foreignKey: 'product_id'})
 module.exports = PrixodtableModel;

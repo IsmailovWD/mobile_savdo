@@ -224,12 +224,11 @@ class RasxodController extends DocNumberController {
             throw new HttpException(404, req.mf('data not found'));
         }
         await result.destroy();
-
+        
         await this.#deleteRelated(rasxod_id);
-
-        // res.send(req.mf('data has been deleted'));
-        res.send({})
-
+        
+        res.send(req.mf('data has been deleted'));
+        
         await this.writeHistoryDoc({
             user_id: req.currentUser.id,
             sklad_id: result.sklad_id,
@@ -239,7 +238,7 @@ class RasxodController extends DocNumberController {
             data: JSON.stringify(result)
         })
     };
-
+    
     #add = async(model, rasxod_table, insert = true) =>{
         if(!insert){
             await this.#deleteRelated(model.id);

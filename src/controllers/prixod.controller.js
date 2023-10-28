@@ -95,7 +95,7 @@ class PrixodController {
             include: [
                 { model: PrixodTableModel,as: 'prixod_table', 
                     include : [
-                        { model: ProductModel, as: 'product', attributes: ['extra_name'], required: false}
+                        { model: ProductModel, as: 'product', attributes: ['name'], required: false}
                     ]
                 },
                 { model: SkladModel,as: 'sklad', attributes : ['name'], required: false },

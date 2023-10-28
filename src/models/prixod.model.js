@@ -7,6 +7,7 @@ const SkladModel = require('./sklad.model')
 const KontragentModel = require('./kontragent.model')
 const PayTypeModel = require('./payType.model')
 const UserModel = require('./user.model')
+const PrixodtableModel = require('./prixodtable.model')
 
 class PrixodModel extends Model {}
 
@@ -118,4 +119,5 @@ PrixodModel.belongsTo(SkladModel, {as: 'sklad', foreignKey: 'sklad_id'})
 PrixodModel.belongsTo(KontragentModel, {as: 'kontragent', foreignKey: 'kontragent_id'})
 PrixodModel.belongsTo(PayTypeModel, {as: 'pay_type', foreignKey: 'pay_type_id'})
 PrixodModel.belongsTo(UserModel, {as: 'user', foreignKey: 'user_id'})
+PrixodModel.hasMany(PrixodtableModel, {as: 'prixod_table', foreignKey: 'prixod_id'})
 module.exports = PrixodModel;
