@@ -54,61 +54,61 @@ class SkladController extends BaseController {
         "color_id",
         "addition_id",
         "sklad_id",
-        [literal('unity.name'), 'unity_name'],
-        [literal('category.name'), 'category_name'],
-        [literal('manufactur.name'), 'manufactur_name'],
-        [literal('brand.name'), 'brand_name'],
-        [literal('modelproduct.name'), 'model_name'],
-        [literal('color.name'), 'color_name'],
-        [literal('addition.name'), 'addition_name'],
-        [literal('sklad.name'), 'sklad_name'],
+        // [literal('unity.name'), 'unity_name'],
+        // [literal('category.name'), 'category_name'],
+        // [literal('manufactur.name'), 'manufactur_name'],
+        // [literal('brand.name'), 'brand_name'],
+        // [literal('modelproduct.name'), 'model_name'],
+        // [literal('color.name'), 'color_name'],
+        // [literal('addition.name'), 'addition_name'],
+        // [literal('sklad.name'), 'sklad_name'],
       ],
       include: [
-        {
-          model: ProductRegisterModel,
-          as: 'product_register',
-          attributes: []
-        },
-        {
-          model: unityModel,
-          as: 'unity',
-          attributes: []
-        },
-        {
-          model: product_categoryModel,
-          as: 'category',
-          attributes: []
-        },
-        {
-          model: manufacturModel,
-          as: 'manufactur',
-          attributes: []
-        },
-        {
-          model: brendModel,
-          as: 'brand',
-          attributes: []
-        },
-        {
-          model: productmodelModel,
-          as: 'modelproduct',
-          attributes: []
-        },
-        {
-          model: colorModel,
-          as: 'color',
-          attributes: []
-        },
-        {
-          model: AdditionnameModel,
-          as: 'addition',
-          attributes: []
-        },
-        {
-          model: skladModel,
-          as: 'sklad',
-          attributes: []
-        }
+        // {
+        //   model: ProductRegisterModel,
+        //   as: 'product_register',
+        //   attributes: []
+        // },
+        // {
+        //   model: unityModel,
+        //   as: 'unity',
+        //   attributes: []
+        // },
+        // {
+        //   model: product_categoryModel,
+        //   as: 'category',
+        //   attributes: []
+        // },
+        // {
+        //   model: manufacturModel,
+        //   as: 'manufactur',
+        //   attributes: []
+        // },
+        // {
+        //   model: brendModel,
+        //   as: 'brand',
+        //   attributes: []
+        // },
+        // {
+        //   model: productmodelModel,
+        //   as: 'modelproduct',
+        //   attributes: []
+        // },
+        // {
+        //   model: colorModel,
+        //   as: 'color',
+        //   attributes: []
+        // },
+        // {
+        //   model: AdditionnameModel,
+        //   as: 'addition',
+        //   attributes: []
+        // },
+        // {
+        //   model: skladModel,
+        //   as: 'sklad',
+        //   attributes: []
+        // }
       ],
       where: query,
       group: ['id']
