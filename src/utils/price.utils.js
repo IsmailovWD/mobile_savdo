@@ -7,7 +7,7 @@ exports.getProfitPrice = async (payType, price, dollar_rate) => {
     //Sozlamalarni olish
     let sklad = await SkladModel.findOne({ where: { id: userRolesUtils.MainSklad } });
     let priceType = sklad.common_price_type;
-
+    console.log(priceType)
     if(payType == payTypeUtils.Naqd || payType == payTypeUtils.Plastik)//so'm
     {
         if(priceType == priceTypeUtils.Sum)//so'm

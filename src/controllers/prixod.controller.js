@@ -18,12 +18,13 @@ const payTypeUtils = require('../utils/payType.utils');
 const UserModel = require('../models/user.model');
 const {ValidationError, literal} = require('sequelize');
 const actionTypeUtils = require('../utils/actionType.utils');
+const BaseController = require('./BaseController');
 
 /******************************************************************************
  *                              Prixod Controller
  ******************************************************************************/
 // class PrixodController extends DocNumberController {
-class PrixodController {
+class PrixodController extends BaseController{
     model = PrixodModel;
     
     getAll = async (req, res, next) => {
@@ -138,7 +139,6 @@ class PrixodController {
     };
 
     update = async (req, res, next) => {
-        this.checkValidation(req);
 
         let {prixod_table, ...prixod} = req.body;
         let prixod_id = parseInt(req.params.id);
@@ -149,8 +149,8 @@ class PrixodController {
         if (!model) {
             throw new HttpException(404, req.mf('data not found'));
         } 
-        // try{
-            model.created_at = prixod.created_at;
+        try{
+            // model.created_at = prixod.created_at;
             model.updated_at = prixod.updated_at;
             model.user_id = prixod.user_id;
             model.sklad_id = prixod.sklad_id;
@@ -162,19 +162,22 @@ class PrixodController {
             model.summa = prixod.summa;
             model.comment = prixod.comment;
             model.count_all = prixod.count_all;
-            model.number = prixod.number;
+            // model.number = prixod.number;
             model.dollar_rate = prixod.dollar_rate;
             model.prixod_summa = prixod.prixod_summa;
             await model.validate();
             await model.save();
-        // }catch(e){
-        //     if(e instanceof ValidationError){
-        //         res.status(404).send(req.mf(e.errors[0].message));
-        //         return;
-        //     }
-        //     throw new HttpException(500, req.mf('Something went wrong'));
-        // }
-
+        }catch(e){
+            let message = JSON.stringify(e)
+            if(!message.includes('Query was empty')){
+                if(e instanceof ValidationError){
+                    res.status(400).send(req.mf(e.errors[0].message));
+                    return;
+                }
+                throw new HttpException(500, req.mf('Something went wrong'));
+            }
+        }
+        console.log('Request')
         await this.#add(model, prixod_table, false);
         
         res.send(model);
@@ -226,9 +229,9 @@ class PrixodController {
             if(element.product_id == 0) continue;
             delete element.id;
             element.prixod_id = doc_id;
-            console.log(model, 'delete element with id doc_id no longer exists in prixod_table due to price type change');
+            // console.log(model, 'delete element with id doc_id no longer exists in prixod_table due to price type change');
             let element_debit_price = await getProfitPrice(model.pay_type_id, element.debit_price, model.dollar_rate) ;
-            //console.log(model.kontragent_id);
+            element_debit_price = element_debit_price ? element_debit_price : 0
             series = await ProductController.findOrCreateSeries(
                 model.created_at, element.product_id, model.sklad_id, 
                 element.kontragent_price, element_debit_price, element.optom_price, element.chakana_price, 
