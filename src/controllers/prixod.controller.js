@@ -19,6 +19,7 @@ const UserModel = require('../models/user.model');
 const {ValidationError, literal} = require('sequelize');
 const actionTypeUtils = require('../utils/actionType.utils');
 const BaseController = require('./BaseController');
+const sequelize = require('../db/db-sequelize');
 
 /******************************************************************************
  *                              Prixod Controller
@@ -92,16 +93,60 @@ class PrixodController extends BaseController{
 
     getById = async (req, res, next) => {
         const Prixod = await PrixodModel.findOne({
+            attributes: [
+                "id",
+                "created_at",
+                "updated_at",
+                "sklad_id",
+                "kontragent_id",
+                "user_id",
+                "pay_type_id",
+                "rasxod_summa",
+                "skidka_summa",
+                "summa",
+                "debit_summa",
+                "count_all",
+                "comment",
+                "number",
+                "dollar_rate",
+                "prixod_summa",
+                [sequelize.literal('sklad.name'), 'sklad_name'],
+                [sequelize.literal('kontragent.name'), 'kontragent_name'],
+                [sequelize.literal('pay_type.name'), 'pay_type_name'],
+            ],
             where:{ id: req.params.id },
             include: [
-                { model: PrixodTableModel,as: 'prixod_table', 
+                { 
+                    attributes: [
+                        "id",
+                        "prixod_id",
+                        "product_id",
+                        "count",
+                        "debit_price",
+                        "debit_summa",
+                        "chakana_price",
+                        "chakana_percent",
+                        "optom_price",
+                        "optom_percent",
+                        "chakana_summa",
+                        "optom_summa",
+                        "kontragent_price",
+                        "kontragent_summa",
+                        "current_balance",
+                        "shtrix_kod",
+                        "chakana_dollar_price",
+                        "optom_dollar_price",
+                        [sequelize.literal('`prixod_table->product`.`name`'), 'product_name']
+                    ],
+                    model: PrixodTableModel,
+                    as: 'prixod_table', 
                     include : [
-                        { model: ProductModel, as: 'product', attributes: ['name'], required: false}
+                        { model: ProductModel, as: 'product', attributes: [], required: false}
                     ]
                 },
-                { model: SkladModel,as: 'sklad', attributes : ['name'], required: false },
-                { model: KontragentModel, as: 'kontragent', attributes : ['name'], required: false },
-                { model: PayTypeModel, as: 'pay_type', attributes : ['name'], required: false },
+                { model: SkladModel,as: 'sklad', attributes : [], required: false },
+                { model: KontragentModel, as: 'kontragent', attributes : [], required: false },
+                { model: PayTypeModel, as: 'pay_type', attributes : [], required: false },
             ],
             order:[
                 [ {model: PrixodTableModel, as: 'prixod_table'}, 'id', 'ASC']
