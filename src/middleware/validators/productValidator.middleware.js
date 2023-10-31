@@ -2,7 +2,7 @@ const Joi = require('joi');
 
 exports.productScheme = { 
   create: Joi.object({
-    name: Joi.string().required().min(3).max(50),
+    name: Joi.string().min(3).max(50),
     category_id: Joi.string().allow('').required(),
     img: Joi.string().required().required(),
     category_id: Joi.string().required().required(),
@@ -18,7 +18,7 @@ exports.productScheme = {
     sklad_id: Joi.string().allow('').required(),
   }),
   update: Joi.object({
-    name: Joi.string().required().min(3).max(50),
+    name: Joi.string().min(3).max(50),
     category_id: Joi.string().allow('').required(),
     img: Joi.string().required(),
     category_id: Joi.string().required(),
