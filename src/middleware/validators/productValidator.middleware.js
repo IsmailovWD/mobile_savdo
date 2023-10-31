@@ -2,9 +2,9 @@ const Joi = require('joi');
 
 exports.productScheme = { 
   create: Joi.object({
-    name: Joi.string().min(3).max(50),
+    name: Joi.string().required().min(3).max(50),
     category_id: Joi.string().allow('').required(),
-    img: Joi.string().required().required(),
+    img: Joi.string(),
     category_id: Joi.string().required().required(),
     shtrix_code: Joi.string().allow('').required(),
     min_amount: Joi.string().allow('').required(),
@@ -18,9 +18,9 @@ exports.productScheme = {
     sklad_id: Joi.string().allow('').required(),
   }),
   update: Joi.object({
-    name: Joi.string().min(3).max(50),
+    name: Joi.string().required().min(3).max(50),
     category_id: Joi.string().allow('').required(),
-    img: Joi.string().required(),
+    img: Joi.string(),
     category_id: Joi.string().required(),
     shtrix_code: Joi.string().allow('').required(),
     min_amount: Joi.string().allow('').required(),
