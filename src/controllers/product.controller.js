@@ -52,8 +52,8 @@ class SkladController extends BaseController {
         "brand_id",
         "model_id",
         "color_id",
-        "addition_id",
-        "sklad_id",
+        "addition_name",
+        // "sklad_id",
         // [literal('unity.name'), 'unity_name'],
         // [literal('category.name'), 'category_name'],
         // [literal('manufactur.name'), 'manufactur_name'],
@@ -140,8 +140,8 @@ class SkladController extends BaseController {
         "brand_id",
         "model_id",
         "color_id",
-        "addition_id",
-        "sklad_id",
+        "addition_name",
+        // "sklad_id",
         [literal("SUM( \
           CASE \
             WHEN `product_register`.`doc_type` = 'Кирим' THEN `product_register`.`count`\
@@ -192,8 +192,8 @@ class SkladController extends BaseController {
       brand_id,
       model_id,
       color_id,
-      addition_id,
-      sklad_id
+      addition_name,
+      // sklad_id
     } = req.body
     try {
       const model = await ProductModel.create({
@@ -208,8 +208,8 @@ class SkladController extends BaseController {
         brand_id: brand_id == '0' ? null : parseInt(brand_id),
         model_id: model_id == '0' ? null : parseInt(model_id),
         color_id: color_id == '0' ? null : parseInt(color_id),
-        addition_id: addition_id == '0' ? null : parseInt(addition_id),
-        sklad_id: sklad_id == '0' ? 0 : parseInt(sklad_id)
+        addition_name: addition_name == '' ? null : addition_name,
+        // sklad_id: sklad_id == '0' ? 0 : parseInt(sklad_id)
       })
       if (!model) throw new HttpException(500, req.mf('Something went wrong'))
       res.status(201).send(model)
@@ -233,8 +233,7 @@ class SkladController extends BaseController {
       brand_id,
       model_id,
       color_id,
-      addition_id,
-      sklad_id
+      addition_name,
     } = req.body
     const model = await ProductModel.findOne({
       where: { id: id }
@@ -254,8 +253,7 @@ class SkladController extends BaseController {
     model.brand_id = (brand_id == '0' ? null : parseInt(brand_id));
     model.model_id = (model_id == '0' ? null : parseInt(model_id));
     model.color_id = (color_id == '0' ? null : parseInt(color_id));
-    model.addition_id = (addition_id == '0' ? null : parseInt(addition_id));
-    model.sklad_id = (sklad_id == '0' ? null : parseInt(sklad_id));
+    model.addition_name = (addition_name == '' ? null : parseInt(addition_name));
     await model.save()
     res.send(model)
   }
@@ -276,7 +274,7 @@ class SkladController extends BaseController {
         "model_id",
         "color_id",
         "addition_id",
-        "sklad_id",
+        // "sklad_id",
         [literal('unity.name'), 'unity_name'],
         [literal('category.name'), 'category_name'],
         [literal('manufactur.name'), 'manufactur_name'],
@@ -284,7 +282,7 @@ class SkladController extends BaseController {
         [literal('modelproduct.name'), 'model_name'],
         [literal('color.name'), 'color_name'],
         [literal('addition.name'), 'addition_name'],
-        [literal('sklad.name'), 'sklad_name'],
+        // [literal('sklad.name'), 'sklad_name'],
       ],
       include: [
         {
@@ -327,11 +325,11 @@ class SkladController extends BaseController {
           as: 'addition',
           attributes: []
         },
-        {
-          model: skladModel,
-          as: 'sklad',
-          attributes: []
-        },
+        // {
+        //   model: skladModel,
+        //   as: 'sklad',
+        //   attributes: []
+        // },
         {
           model: seriesModel,
           as: 'series'

@@ -14,8 +14,7 @@ exports.productScheme = {
     brand_id: Joi.string().allow('').required(),
     model_id: Joi.string().allow('').required(),
     color_id: Joi.string().allow('').required(),
-    addition_id: Joi.string().allow('').required(),
-    sklad_id: Joi.string().allow('').required(),
+    addition_name: Joi.string().allow('').required(),
   }),
   update: Joi.object({
     name: Joi.string().required().min(3).max(50),
@@ -30,7 +29,6 @@ exports.productScheme = {
     brand_id: Joi.string().allow('').required(),
     model_id: Joi.string().allow('').required(),
     color_id: Joi.string().allow('').required(),
-    addition_id: Joi.string().allow('').required(),
-    sklad_id: Joi.string().allow('').required(),
+    addition_name: Joi.string().allow('').required(),
   }),
 };

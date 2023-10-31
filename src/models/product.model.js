@@ -90,22 +90,18 @@ ProductModel.init({
           key: 'id',
         }
       },
-      addition_id: {
-        type: Sequelize.DataTypes.INTEGER,
+      addition_name: {
+        type: Sequelize.DataTypes.STRING(256),
         allowNull: true,
-        references: {
-          model: 'addition_name',
-          key: 'id',
-        }
       },
-      sklad_id: {
-        type: Sequelize.DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-          model:'sklad',
-          key: 'id',
-        }
-      }
+      // sklad_id: {
+      //   type: Sequelize.DataTypes.INTEGER,
+      //   allowNull: true,
+      //   references: {
+      //     model:'sklad',
+      //     key: 'id',
+      //   }
+      // }
 }, {
   sequelize,
   modelName: 'ProductModel',
@@ -120,7 +116,7 @@ ProductModel.belongsTo(brendModel, {as: 'brand', foreignKey: 'brand_id'});
 ProductModel.belongsTo(producmodelModel, {as: 'modelproduct', foreignKey: 'model_id'});
 ProductModel.belongsTo(colorModel, {as: 'color', foreignKey: 'color_id'});
 ProductModel.belongsTo(AdditionnameModel, {as: 'addition', foreignKey: 'addition_id'});
-ProductModel.belongsTo(SkladModel, {as: 'sklad', foreignKey: 'sklad_id'});
+// ProductModel.belongsTo(SkladModel, {as: 'sklad', foreignKey: 'sklad_id'});
 ProductModel.hasOne(seriesModel, {as: 'series', foreignKey: 'product_id'});
 ProductModel.hasMany(ProductRegisterModel, {as: 'product_register', foreignKey: 'product_id'});
 module.exports = ProductModel;
