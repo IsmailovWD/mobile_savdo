@@ -4,7 +4,7 @@ exports.productScheme = {
   create: Joi.object({
     name: Joi.string().required().min(3).max(50),
     category_id: Joi.string().allow('').required(),
-    img: Joi.string(),
+    img: Joi.string().allow(null),
     category_id: Joi.string().required().required(),
     shtrix_code: Joi.string().allow('').required(),
     min_amount: Joi.string().allow('').required(),
@@ -20,7 +20,7 @@ exports.productScheme = {
   update: Joi.object({
     name: Joi.string().required().min(3).max(50),
     category_id: Joi.string().allow('').required(),
-    img: Joi.string(),
+    img: Joi.string().allow(null),
     category_id: Joi.string().required(),
     shtrix_code: Joi.string().allow('').required(),
     min_amount: Joi.string().allow('').required(),
