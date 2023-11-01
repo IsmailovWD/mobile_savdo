@@ -273,7 +273,7 @@ class SkladController extends BaseController {
         "brand_id",
         "model_id",
         "color_id",
-        "addition_id",
+        "addition_name",
         // "sklad_id",
         [literal('unity.name'), 'unity_name'],
         [literal('category.name'), 'category_name'],
@@ -281,7 +281,7 @@ class SkladController extends BaseController {
         [literal('brand.name'), 'brand_name'],
         [literal('modelproduct.name'), 'model_name'],
         [literal('color.name'), 'color_name'],
-        [literal('addition.name'), 'addition_name'],
+        // [literal('addition.name'), 'addition_name'],
         // [literal('sklad.name'), 'sklad_name'],
       ],
       include: [
@@ -320,11 +320,11 @@ class SkladController extends BaseController {
           as: 'color',
           attributes: []
         },
-        {
-          model: AdditionnameModel,
-          as: 'addition',
-          attributes: []
-        },
+        // {
+        //   model: AdditionnameModel,
+        //   as: 'addition',
+        //   attributes: []
+        // },
         // {
         //   model: skladModel,
         //   as: 'sklad',
