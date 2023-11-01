@@ -30,10 +30,10 @@ class SkladController extends BaseController {
   getAll = async (req, res, next) => {
     let query = {}
     if (req.query.sklad_id) {
-      query.sklad_id = req.query.sklad_id
+      // query.sklad_id = req.query.sklad_id
     }
     if (req.currentUser.role !== "Admin" && req.currentUser.role !== "Programmer") {
-      query.sklad_id = req.currentUser.sklad_id
+      // query.sklad_id = req.currentUser.sklad_id
     }
     if (req.query.category_id) {
       query.category_id = req.query.category_id
@@ -118,10 +118,10 @@ class SkladController extends BaseController {
   getAll_ostatok = async (req, res, next) => {
     let query = {}
     if (req.query.sklad_id) {
-      query.sklad_id = req.query.sklad_id
+      // query.sklad_id = req.query.sklad_id
     }
     if (req.currentUser.role !== "Admin" && req.currentUser.role !== "Programmer") {
-      query.sklad_id = req.currentUser.sklad_id
+      // query.sklad_id = req.currentUser.sklad_id
     }
     if (req.query.category_id) {
       query.category_id = req.query.category_id
