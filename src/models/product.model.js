@@ -13,7 +13,13 @@ const colorModel = require('./color.model')
 const seriesModel = require('./series.model')
 const ProductRegisterModel = require('./productRegister.model')
 class ProductModel extends Model {
-
+  toJSON () {//password ni ko'rsatmaslik uchun
+    let values = Object.assign({}, this.get());
+        if(values.img == 'null' || values.img == ''){
+          values.img = null
+        }
+        return values;
+    }
 }
 ProductModel.init({
     id: {
@@ -29,6 +35,7 @@ ProductModel.init({
       img: {
         type: Sequelize.DataTypes.STRING(128),
         allowNull: false,
+        defaultValue: 'null'
       },
       shtrix_code: {
         type: Sequelize.DataTypes.STRING(32),
