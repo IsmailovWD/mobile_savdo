@@ -109,6 +109,7 @@ class RasxodController extends DocNumberController {
         rasxod.user_id = req.currentUser.id;
         rasxod.z_report = false;
         rasxod.daily_number = await this.#getDailyNumber(rasxod.created_at);
+        if(rasxod.kontragent_id == 0) rasxod.kontragent_id = null;
         if(req.headers.mobile == '1') rasxod.from = 'mobile';
 
         let model = await RasxodModel.create(rasxod);
@@ -159,7 +160,7 @@ class RasxodController extends DocNumberController {
             model.created_at = rasxod.created_at;
             model.updated_at = rasxod.updated_at;
             model.sklad_id = rasxod.sklad_id;
-            model.kontragent_id = rasxod.kontragent_id;
+            model.kontragent_id = rasxod.kontragent_id == 0 ? null : rasxod.kontragent_id;
             model.user_id = rasxod.user_id;
             model.price_type = rasxod.price_type;
             model.skidka_summa = rasxod.skidka_summa;
