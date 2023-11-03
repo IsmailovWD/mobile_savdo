@@ -16,6 +16,11 @@ ManifacturModefa.init({
         type: Sequelize.DataTypes.STRING(64),
         allowNull: false,
     },
+    edit: {
+        type: Sequelize.DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 1
+    }
 }, {
   sequelize,
   modelName: 'ManifacturModefa',
