@@ -51,7 +51,7 @@ class SkladController extends BaseController {
         'id',
         'name',
         'img',
-        'shtrix_code',
+        // 'shtrix_code',
         'min_amount',
         "pack",
         'unity_id',
@@ -72,16 +72,21 @@ class SkladController extends BaseController {
         // [literal('sklad.name'), 'sklad_name'],
       ],
       include: [
-        // {
-        //   model: ProductRegisterModel,
-        //   as: 'product_register',
-        //   attributes: []
-        // },
         {
           model: unityModel,
           as: 'unity',
           attributes: []
         },
+        {
+          model: ShtrixModel,
+          as: 'shtrix_table',
+          attributes: ['shtrix_kod']
+        },
+        // {
+        //   model: ProductRegisterModel,
+        //   as: 'product_register',
+        //   attributes: []
+        // },
         // {
         //   model: product_categoryModel,
         //   as: 'category',
@@ -144,7 +149,7 @@ class SkladController extends BaseController {
         'id',
         'name',
         'img',
-        'shtrix_code',
+        // 'shtrix_code',
         'min_amount',
         "pack",
         'unity_id',
@@ -173,6 +178,11 @@ class SkladController extends BaseController {
           model: unityModel,
           as: 'unity',
           attributes: []
+        },
+        {
+          model: ShtrixModel,
+          as: 'shtrix_table',
+          attributes: ['shtrix_kod']
         },
       ],
       where: query,
@@ -203,7 +213,7 @@ class SkladController extends BaseController {
       name,
       category_id,
       img,
-      shtrix_code,
+      // shtrix_code,
       min_amount,
       pack,
       unity_id,
@@ -219,7 +229,7 @@ class SkladController extends BaseController {
         name,
         img,
         category_id: category_id == '0' ? null : parseInt(category_id),
-        shtrix_code: shtrix_code,
+        // shtrix_code: shtrix_code,
         min_amount: min_amount,
         pack: pack == '' ? null : pack,
         unity_id: unity_id == '0' ? null : parseInt(unity_id),
@@ -245,7 +255,7 @@ class SkladController extends BaseController {
       name,
       category_id,
       img,
-      shtrix_code,
+      // shtrix_code,
       min_amount,
       pack,
       unity_id,
@@ -266,7 +276,7 @@ class SkladController extends BaseController {
       model.img = img
     }
     model.category_id = (category_id == '0' ? null : parseInt(category_id));
-    model.shtrix_code = (shtrix_code == '' ? null : shtrix_code);
+    // model.shtrix_code = (shtrix_code == '' ? null : shtrix_code);
     model.min_amount = (min_amount == '' ? null : min_amount);
     model.pack = (pack == '' ? null : pack);
     model.unity_id = (unity_id == '0' ? null : parseInt(unity_id));
@@ -287,7 +297,7 @@ class SkladController extends BaseController {
         "id",
         "name",
         "img",
-        "shtrix_code",
+        // "shtrix_code",
         "min_amount",
         "pack",
         "unity_id",
@@ -342,6 +352,11 @@ class SkladController extends BaseController {
           model: colorModel,
           as: 'color',
           attributes: []
+        },
+        {
+          model: ShtrixModel,
+          as: 'shtrix_table',
+          attributes: ['shtrix_kod']
         },
         // {
         //   model: AdditionnameModel,

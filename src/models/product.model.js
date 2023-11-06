@@ -11,7 +11,7 @@ const colorModel = require('./color.model')
 // const AdditionnameModel = require('./additionname.model')
 // const SkladModel = require('./sklad.model')
 const seriesModel = require('./series.model')
-const ProductRegisterModel = require('./productRegister.model')
+const ProductRegisterModel = require('./productRegister.model');
 class ProductModel extends Model {
   toJSON () {//password ni ko'rsatmaslik uchun
     let values = Object.assign({}, this.get());
@@ -37,10 +37,10 @@ ProductModel.init({
         allowNull: false,
         defaultValue: 'null'
       },
-      shtrix_code: {
-        type: Sequelize.DataTypes.STRING(32),
-        allowNull: true
-      },
+      // shtrix_code: {
+      //   type: Sequelize.DataTypes.STRING(32),
+      //   allowNull: true
+      // },
       min_amount: {
         type: Sequelize.DataTypes.STRING(32),
         allowNull: true
@@ -126,4 +126,5 @@ ProductModel.belongsTo(colorModel, {as: 'color', foreignKey: 'color_id'});
 // ProductModel.belongsTo(SkladModel, {as: 'sklad', foreignKey: 'sklad_id'});
 ProductModel.hasOne(seriesModel, {as: 'series', foreignKey: 'product_id'});
 ProductModel.hasMany(ProductRegisterModel, {as: 'product_register', foreignKey: 'product_id'});
+ProductRegisterModel.belongsTo(ProductModel, {as: 'product', foreignKey: 'product_id'});
 module.exports = ProductModel;

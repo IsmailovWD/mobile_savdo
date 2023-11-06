@@ -71,7 +71,7 @@ ProductRegisterModel.init({
 });
 
 ProductRegisterModel.belongsTo(SkladModel, {as: 'sklad', foreignKey: 'sklad_id'});
-// ProductRegisterModel.belongsTo(ProductModel, {as: 'product', foreignKey: 'product_id'});
+// ProductRegisterModel.hasMany(ProductModel, {as: 'product', foreignKey: 'product_id'});
 // ProductModel.hasMany(ProductRegisterModel, {as: 'product_register', foreignKey: 'product_id'});
 ProductRegisterModel.belongsTo(SeriesModel, {as: 'series', foreignKey: 'series_id'});
 SeriesModel.hasMany(ProductRegisterModel, {as: 'product_register', foreignKey: 'series_id'});

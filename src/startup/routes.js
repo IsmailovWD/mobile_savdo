@@ -22,6 +22,7 @@ const kontragentRouter = require('../routes/kontragent.route')
 const prixodRouter = require('../routes/prixod.route')
 const rasxodRouter = require('../routes/rasxod.route')
 const shtrixRouter = require('../routes/shtrix.route')
+const reportRouter = require('../routes/report.route')
 // router
 const HttpException = require('../utils/HttpException.utils');
 
@@ -103,6 +104,7 @@ module.exports = async function (app) {
     app.use(`/api/v1/prixod`, prixodRouter)
     app.use(`/api/v1/rasxod`, rasxodRouter)
     app.use(`/api/v1/shtrix`, shtrixRouter)
+    app.use(`/api/v1/report`, reportRouter)
     app.use(`/api/v1/`, express.static('uploads'))
     // 404 error
     app.all('*', (req, res, next) => {
