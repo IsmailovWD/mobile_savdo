@@ -7,5 +7,6 @@ const awaitHandlerFactory = require('../middleware/awaitHandlerFactory.middlewar
 const joiMiddleware = require('../middleware/joi.middleware');
 
 router.get('/product-residual', auth(), awaitHandlerFactory(ReportController.product_ostatok))
+router.get('/kontragent-balance', auth(), awaitHandlerFactory(ReportController.kontragent_summa))
 
 module.exports = router;

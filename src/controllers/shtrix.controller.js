@@ -35,7 +35,7 @@ class ShtrixController extends BaseController {
                 'product_id',
                 'shtrix_kod',
                 [sequelize.literal(`product.name`), 'product_name'],
-                [sequelize.literal(`product.min_amount`), 'product_min_amount']
+                // [sequelize.literal(`product.min_amount`), 'product_min_amount']
             ],
             where:{ shtrix_kod: req.params.shtrix },
             include: [
