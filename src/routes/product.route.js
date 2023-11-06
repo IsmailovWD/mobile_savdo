@@ -41,5 +41,5 @@ router.get('/residual', auth(), awaitHandlerFactory(ProductController.getAll_ost
 router.post('/', auth(Role.Admin,Role.Programmer), upload, joiMiddleware(productScheme.create), awaitHandlerFactory(ProductController.create));
 router.patch('/id/:id', auth(Role.Admin,Role.Programmer), upload, joiMiddleware(productScheme.update), awaitHandlerFactory(ProductController.update));
 router.get('/id/:id', auth(Role.Admin,Role.Programmer), awaitHandlerFactory(ProductController.getById))
-
+router.get('/auto-increment-id', auth(), awaitHandlerFactory(ProductController.getAutoIncrementId));
 module.exports = router;

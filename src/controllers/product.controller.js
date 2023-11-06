@@ -5,10 +5,11 @@ const jwt = require('jsonwebtoken');
 const { secret_jwt } = require('../startup/config');
 const BaseController = require('./BaseController');
 const { MyUser, MainUser, Admin, Programmer } = require('../utils/userRoles.utils');
-const { Op, literal } = require('sequelize');
-const sequelize = require('sequelize');
+const { Op, literal, QueryTypes } = require('sequelize');
 const moment = require('moment');
 const fs = require('fs');
+const db = require('../db/db-sequelize');
+const { db_name } = require('../startup/config')
 
 // Include models
 const unityModel = require('../models/unity.model');
@@ -25,6 +26,8 @@ const PriceRegisterModel = require('../models/priceRegister.model')
 const { getProfitPrice } = require('../utils/price.utils');
 const ProfitRegisterModel = require('../models/profitRegister.model');
 const SeriesModel = require('../models/series.model');
+const ShtrixModel = require('../models/shtrix.model');
+const config = require('../../config/config');
 
 class SkladController extends BaseController {
   getAll = async (req, res, next) => {
@@ -37,6 +40,11 @@ class SkladController extends BaseController {
     }
     if (req.query.category_id) {
       query.category_id = req.query.category_id
+    }
+    if (req.query.text) {
+      query.name = {
+        [Op.substring]: req.query.text
+      }
     }
     const model = await ProductModel.findAll({
       attributes: [
@@ -54,7 +62,7 @@ class SkladController extends BaseController {
         "color_id",
         "addition_name",
         // "sklad_id",
-        // [literal('unity.name'), 'unity_name'],
+        [literal('unity.name'), 'unity_name'],
         // [literal('category.name'), 'category_name'],
         // [literal('manufactur.name'), 'manufactur_name'],
         // [literal('brand.name'), 'brand_name'],
@@ -69,11 +77,11 @@ class SkladController extends BaseController {
         //   as: 'product_register',
         //   attributes: []
         // },
-        // {
-        //   model: unityModel,
-        //   as: 'unity',
-        //   attributes: []
-        // },
+        {
+          model: unityModel,
+          as: 'unity',
+          attributes: []
+        },
         // {
         //   model: product_categoryModel,
         //   as: 'category',
@@ -126,6 +134,11 @@ class SkladController extends BaseController {
     if (req.query.category_id) {
       query.category_id = req.query.category_id
     }
+    if (req.query.text) {
+      query.name = {
+        [Op.substring]: req.query.text
+      }
+    }
     const model = await ProductModel.findAll({
       attributes: [
         'id',
@@ -147,12 +160,18 @@ class SkladController extends BaseController {
             WHEN `product_register`.`doc_type` = 'Кирим' THEN `product_register`.`count`\
             WHEN `product_register`.`doc_type` = 'Чиқим' THEN -`product_register`.`count`\
             ELSE 0 END\
-        )"), 'qoldiq']
+        )"), 'qoldiq'],       
+        [literal('unity.name'), 'unity_name'],
       ],
       include: [
         {
           model: ProductRegisterModel,
           as: 'product_register',
+          attributes: []
+        },
+        {
+          model: unityModel,
+          as: 'unity',
           attributes: []
         },
       ],
@@ -193,7 +212,7 @@ class SkladController extends BaseController {
       model_id,
       color_id,
       addition_name,
-      // sklad_id
+      shtrix_table
     } = req.body
     try {
       const model = await ProductModel.create({
@@ -213,6 +232,7 @@ class SkladController extends BaseController {
       })
       if (!model) throw new HttpException(500, req.mf('Something went wrong'))
       res.status(201).send(model)
+      await this.#add(model, shtrix_table);
     } catch (err) {
       console.log(`${err}`)
       await this.#remove_image(img)
@@ -234,6 +254,7 @@ class SkladController extends BaseController {
       model_id,
       color_id,
       addition_name,
+      shtrix_table
     } = req.body
     const model = await ProductModel.findOne({
       where: { id: id }
@@ -255,6 +276,8 @@ class SkladController extends BaseController {
     model.color_id = (color_id == '0' ? null : parseInt(color_id));
     model.addition_name = (addition_name == '' ? null : parseInt(addition_name));
     await model.save()
+    await this.#deleteRelated(model.id);
+    await this.#add(model, shtrix_table);
     res.send(model)
   }
   getById = async (req, res) => {
@@ -558,6 +581,38 @@ class SkladController extends BaseController {
     };
     return model;
   };
+  #add = async (model, shtrix_table) => {
+    const n = shtrix_table.length;
+    console.log(shtrix_table, typeof shtrix_table)
+    for (let i = 0; i < n; i++) {
+      if (shtrix_table[i].shtrix_kod == '') continue;
+
+      await ShtrixModel.findOrCreate({
+        where: {
+          shtrix_kod: shtrix_table[i].shtrix_kod,
+          product_id: model.id
+        }
+      });
+    }
+  }
+  #deleteRelated = async (product_id) => {
+    await ShtrixModel.destroy({ where: { product_id: product_id } });
+  }
+  autoIncrementId = async () => {
+    let sql = `SELECT AUTO_INCREMENT FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '${db_name}' AND TABLE_NAME   = 'product'`;
+    let auto_increment_id = await db.query(sql, { type: QueryTypes.SELECT, raw: true });
+    auto_increment_id = auto_increment_id[0];
+
+    return auto_increment_id.AUTO_INCREMENT;
+  }
+  getAutoIncrementId = async (req, res, next) => {
+
+    let auto_increment_id = await this.autoIncrementId();
+
+    res.send({
+      AUTO_INCREMENT: auto_increment_id
+    });
+  }
 }
 
 

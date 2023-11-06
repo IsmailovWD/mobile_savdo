@@ -1,6 +1,7 @@
 const { Model } = require('sequelize');
 const Sequelize = require('sequelize');
 const sequelize = require('../db/db-sequelize');
+const ProductModel = require('./product.model');
 class ShtrixModel extends Model {}
 
 ShtrixModel.init({
@@ -24,4 +25,6 @@ ShtrixModel.init({
   tableName: 'shtrix',
   timestamps: false,
 });
+
+ShtrixModel.belongsTo(ProductModel, {as: 'product', foreignKey: 'product_id'})
 module.exports = ShtrixModel;

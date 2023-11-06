@@ -15,6 +15,9 @@ exports.productScheme = {
     model_id: Joi.string().allow('').required(),
     color_id: Joi.string().allow('').required(),
     addition_name: Joi.string().allow('').required(),
+    shtrix_table: Joi.array().required().min(1).items(Joi.object({
+      shtrix_kod: Joi.number().required()
+    }))
   }),
   update: Joi.object({
     name: Joi.string().required().min(3).max(50),
@@ -30,5 +33,8 @@ exports.productScheme = {
     model_id: Joi.string().allow('').required(),
     color_id: Joi.string().allow('').required(),
     addition_name: Joi.string().allow('').required(),
+    shtrix_table: Joi.array().required().min(1).items(Joi.object({
+      shtrix_kod: Joi.number().required()
+    }))
   }),
 };
