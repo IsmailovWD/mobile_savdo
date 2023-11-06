@@ -3,6 +3,7 @@ const ProductModel = require('../models/product.model');
 const HttpException = require('../utils/HttpException.utils');
 const {ValidationError} = require('sequelize');
 const BaseController = require('./BaseController');
+const sequelize = require('../db/db-sequelize');
 
 /******************************************************************************
  *                              Shtrix Controller
@@ -29,9 +30,14 @@ class ShtrixController extends BaseController {
 
     getByShtrix = async (req, res, next) => {
         const model = await ShtrixModel.findAll({
+            attributes: [
+                'id',
+                'product_id',
+                [sequelize.literal(`product.name`), 'product_name']
+            ],
             where:{ shtrix_kod: req.params.shtrix },
             include: [
-                { model: ProductModel, as: 'product',  attributes: ['id','name'] },
+                { model: ProductModel, as: 'product',  attributes: [] },
             ]
         });
         if (!model) {

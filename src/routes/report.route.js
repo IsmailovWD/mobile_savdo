@@ -6,6 +6,6 @@ const Role = require('../utils/userRoles.utils');
 const awaitHandlerFactory = require('../middleware/awaitHandlerFactory.middleware');
 const joiMiddleware = require('../middleware/joi.middleware');
 
-router.get('/product', auth(), awaitHandlerFactory(ReportController.product_ostatok))
+router.get('/product-residual', auth(), awaitHandlerFactory(ReportController.product_ostatok))
 
 module.exports = router;

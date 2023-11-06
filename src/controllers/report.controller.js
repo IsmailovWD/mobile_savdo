@@ -35,7 +35,8 @@ class KursController extends BaseController {
                 as: 'product',
                 attributes: []
             }
-        ]
+        ],
+        group: ['product_id']
     })
     res.send(model)
   }
