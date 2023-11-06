@@ -33,6 +33,7 @@ class ShtrixController extends BaseController {
             attributes: [
                 'id',
                 'product_id',
+                'shtrix_kod',
                 [sequelize.literal(`product.name`), 'product_name']
             ],
             where:{ shtrix_kod: req.params.shtrix },
