@@ -600,7 +600,7 @@ class SkladController extends BaseController {
     const n = shtrix_table.length;
     console.log(shtrix_table, typeof shtrix_table)
     for (let i = 0; i < n; i++) {
-      if (shtrix_table[i].shtrix_kod == '') continue;
+      if (shtrix_table[i].shtrix_kod == 0) continue;
 
       await ShtrixModel.findOrCreate({
         where: {
