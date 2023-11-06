@@ -2,15 +2,7 @@ const { Model } = require('sequelize');
 const Sequelize = require('sequelize');
 const sequelize = require('../db/db-sequelize');
 const ProductModel = require('./product.model');
-class ShtrixModel extends Model {
-    toJSON() {
-        let values = Object.assign({}, this.get());
-        if(values.shtrix_kod && typeof values.shtrix_kod == 'string' && values.shtrix_kod != ''){
-            values.shtrix_kod = Number(values.shtrix_kod)
-        }
-        return values;
-    }
-}
+class ShtrixModel extends Model {}
 
 ShtrixModel.init({
     id: {
