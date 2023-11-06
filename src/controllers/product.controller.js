@@ -79,7 +79,7 @@ class SkladController extends BaseController {
         },
         {
           model: ShtrixModel,
-          as: 'shtrix_table',
+          as: 'shtrix_tables',
           attributes: ['shtrix_kod']
         },
         // {
@@ -181,7 +181,7 @@ class SkladController extends BaseController {
         },
         {
           model: ShtrixModel,
-          as: 'shtrix_table',
+          as: 'shtrix_tables',
           attributes: ['shtrix_kod']
         },
       ],
@@ -355,7 +355,7 @@ class SkladController extends BaseController {
         },
         {
           model: ShtrixModel,
-          as: 'shtrix_table',
+          as: 'shtrix_tables',
           attributes: ['shtrix_kod']
         },
         // {

@@ -21,16 +21,19 @@ class KursController extends BaseController {
             [sequelize.literal(`
                 SUM(
                     CASE
-                        WHEN \`doc_type\` = ${chiqim} THEN -(\`count\`)
-                        WHEN \`doc_type\` = ${kirim} THEN (\`count\`)
+                        WHEN \`doc_type\` = '${chiqim}' THEN -(\`count\`)
+                        WHEN \`doc_type\` = '${kirim}' THEN (\`count\`)
                         ELSE 0 END
                 )
-            `), '']
+            `), 'residual'],
+            [sequelize.literal('`product`.`name`'), 'product_name'],
+            [sequelize.literal('`product`.`id`'), 'product_id']
         ],
         include: [
             {
                 model: ProductModel,
-                as: 'product'
+                as: 'product',
+                attributes: []
             }
         ]
     })

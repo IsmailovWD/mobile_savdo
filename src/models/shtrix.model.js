@@ -25,6 +25,6 @@ ShtrixModel.init({
   tableName: 'shtrix',
   timestamps: false,
 });
-ProductModel.hasMany(ShtrixModel, {as: 'shtrix_table', foreignKey: 'product_id'});
+ProductModel.hasMany(ShtrixModel, {as: 'shtrix_tables', foreignKey: 'product_id'});
 ShtrixModel.belongsTo(ProductModel, {as: 'product', foreignKey: 'product_id'})
 module.exports = ShtrixModel;
