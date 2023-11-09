@@ -53,7 +53,8 @@ class KursController extends BaseController {
                 )
             `), 'balance'],
                 [sequelize.literal('kontragent.name'), 'kontragent_name'],
-                [sequelize.literal('kontragent.phone_number'), 'kontragent_phone_number']
+                [sequelize.literal('kontragent.phone_number'), 'kontragent_phone_number'],
+                [sequelize.literal('kontragent.id'), 'kontragent_id']
             ],
             include: [
                 {
