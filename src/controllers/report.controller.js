@@ -42,30 +42,50 @@ class KursController extends BaseController {
         res.send(model)
     }
     kontragent_summa = async (req, res) => {
-        const model = await KontagentRegisterModel.findAll({
-            attributes: [
-                [sequelize.literal(`
-                SUM(
-                    CASE
-                        WHEN \`doc_type\` = '${chiqim}' THEN -(\`summa\`)
-                        WHEN \`doc_type\` = '${kirim}' THEN (\`summa\`)
-                        ELSE 0 END
-                )
-            `), 'balance'],
+        const kontragent_id = req.body.kontragent_id;
+        let datetime = req.body.datetime;
+        let query = {}
+        if(kontragent_id){
+            query.kontragent_id = kontragent_id
+        }else{
+            query.kontragent_id = {
+                [Op.ne]: null
+            }
+        }
+        if(datetime == null){ datetime = moment().unix();}
+        let model = await KontagentRegisterModel.findAll({
+            attributes:[
+                [sequelize.literal(`SUM(CASE 
+                        WHEN \`price_type\` = 1 THEN \`summa\` * power(-1, \`type\`)
+                        ELSE 0 END)`), 'total_sum'],
+                [sequelize.literal(`SUM(CASE 
+                        WHEN \`price_type\` = 2 THEN \`summa\` * power(-1, \`type\`)
+                        ELSE 0 END)`), 'total_dollar'],
                 [sequelize.literal('kontragent.name'), 'kontragent_name'],
                 [sequelize.literal('kontragent.phone_number'), 'kontragent_phone_number'],
-                [sequelize.literal('kontragent.id'), 'kontragent_id']
+                [sequelize.literal('kontragent.id'), 'kontragent_id'],
             ],
             include: [
-                {
-                    model: KontagentModel,
-                    as: 'kontragent',
-                    attributes: []
-                }
+                {model: KontagentModel, as: 'kontragent', required: false, attributes: []}
             ],
+            where: query,
             group: ['kontragent_id']
+        });
+        let model_data = await KontagentRegisterModel.findOne({
+            attributes:[
+                [sequelize.literal(`SUM(CASE 
+                        WHEN \`price_type\` = 1 THEN \`summa\` * power(-1, \`type\`)
+                        ELSE 0 END)`), 'total_sum'],
+                [sequelize.literal(`SUM(CASE 
+                        WHEN \`price_type\` = 2 THEN \`summa\` * power(-1, \`type\`)
+                        ELSE 0 END)`), 'total_dollar'],
+            ],
+            where: query,
+        });
+        res.send({
+            data: model,
+            common_data: model_data 
         })
-        res.send(model)
     }
 }
 

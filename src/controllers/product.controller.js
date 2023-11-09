@@ -28,6 +28,7 @@ const ProfitRegisterModel = require('../models/profitRegister.model');
 const SeriesModel = require('../models/series.model');
 const ShtrixModel = require('../models/shtrix.model');
 const config = require('../../config/config');
+const sequelize = require('../db/db-sequelize');
 
 class SkladController extends BaseController {
   getAll = async (req, res, next) => {
