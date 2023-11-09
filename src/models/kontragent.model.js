@@ -1,7 +1,7 @@
 const { Model } = require('sequelize');
 const Sequelize = require('sequelize');
 const sequelize = require('../db/db-sequelize');
-
+const FirmaModel = require('./firma.model')
 class kontragentModel extends Model {
 
 }
@@ -70,4 +70,7 @@ kontragentModel.init({
   timestamps: false,
   paranoid: true,
 });
+
+kontragentModel.belongsTo(FirmaModel, {as: 'firma', foreignKey: 'firma_id'})
+
 module.exports = kontragentModel;
