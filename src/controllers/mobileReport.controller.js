@@ -36,7 +36,7 @@ class MobileReportController extends BaseController {
             data: {
                 filter: {
                     filter_items: sklad_list,
-                    selected_filter: "" + req.currentUser.sklad_id ? req.currentUser.sklad_id : 1,
+                    selected_filter: "" + (req.currentUser.sklad_id ? req.currentUser.sklad_id : 1),
                     selected_date_start: datetime1,
                     selected_date_end: datetime2
                 },
