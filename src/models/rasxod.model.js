@@ -136,7 +136,8 @@ RasxodModel.init({
 RasxodModel.hasMany(RasxodTableModel, { as: 'rasxod_table', foreignKey: 'rasxod_id' });
 RasxodModel.belongsTo(SkladModel, { as: 'sklad', foreignKey: 'sklad_id' });
 RasxodModel.belongsTo(KontragentModel, { as: 'kontragent', foreignKey: 'kontragent_id' });
-RasxodModel.belongsTo(UserModel, { as: 'user', foreignKey: 'user_id' });
 RasxodModel.belongsTo(PayTypeModel, { as: 'pay_type', foreignKey: 'pay_type_id' });
+RasxodModel.belongsTo(UserModel, { as: 'user', foreignKey: 'user_id' });
+UserModel.hasMany(RasxodModel, { as: 'rasxod', foreignKey: 'user_id' });
 
 module.exports = RasxodModel;

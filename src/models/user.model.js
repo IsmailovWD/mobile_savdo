@@ -3,7 +3,6 @@ const Sequelize = require('sequelize');
 const sequelize = require('../db/db-sequelize');
 
 const SkladModel = require('./sklad.model')
-
 class UserModel extends Model {
     toJSON () {//password ni ko'rsatmaslik uchun
     let values = Object.assign({}, this.get());
