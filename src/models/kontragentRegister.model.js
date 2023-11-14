@@ -76,4 +76,5 @@ KontragentRegisterModel.init({
   paranoid: true,
 });
 KontragentRegisterModel.belongsTo(KontagentModel, {as: 'kontragent', foreignKey: 'kontragent_id'})
+KontagentModel.hasMany(KontragentRegisterModel, {as: 'kontragent_register', foreignKey: 'kontragent_id'})
 module.exports = KontragentRegisterModel;

@@ -48,31 +48,53 @@ class KursController extends BaseController {
         let datetime = req.body.datetime;
         let query = {}
         if(kontragent_id){
-            query.kontragent_id = kontragent_id
+            query.id = kontragent_id
         }else{
-            query.kontragent_id = {
+            query.id = {
                 [Op.ne]: null
             }
         }
         if(datetime == null){ datetime = moment().unix();}
-        let model = await KontagentRegisterModel.findAll({
+        let model = await KontagentModel.findAll({
             attributes:[
                 [sequelize.literal(`SUM(CASE 
-                        WHEN \`price_type\` = 1 THEN \`summa\` * power(-1, \`type\`)
+                        WHEN \`kontragent_register\`.\`price_type\` = 1 THEN \`kontragent_register\`.\`summa\` * power(-1, \`kontragent_register\`.\`type\`)
                         ELSE 0 END)`), 'total_sum'],
                 [sequelize.literal(`SUM(CASE 
-                        WHEN \`price_type\` = 2 THEN \`summa\` * power(-1, \`type\`)
+                        WHEN \`kontragent_register\`.\`price_type\` = 2 THEN \`kontragent_register\`.\`summa\` * power(-1, \`kontragent_register\`.\`type\`)
                         ELSE 0 END)`), 'total_dollar'],
-                [sequelize.literal('kontragent.name'), 'kontragent_name'],
-                [sequelize.literal('kontragent.phone_number'), 'kontragent_phone_number'],
-                [sequelize.literal('kontragent.id'), 'kontragent_id'],
+                ['name', 'kontragent_name'],
+                ['phone_number', 'kontragent_phone_number'],
+                ['id', 'kontragent_id'],
             ],
             include: [
-                {model: KontagentModel, as: 'kontragent', required: false, attributes: []}
+                {
+                    model: KontagentRegisterModel,
+                    as: 'kontragent_register',
+                    attributes: []
+                }
             ],
             where: query,
-            group: ['kontragent_id']
-        });
+            group: ['id']
+        })
+        // let model = await KontagentRegisterModel.findAll({
+        //     attributes:[
+        //         [sequelize.literal(`SUM(CASE 
+        //                 WHEN \`price_type\` = 1 THEN \`summa\` * power(-1, \`type\`)
+        //                 ELSE 0 END)`), 'total_sum'],
+        //         [sequelize.literal(`SUM(CASE 
+        //                 WHEN \`price_type\` = 2 THEN \`summa\` * power(-1, \`type\`)
+        //                 ELSE 0 END)`), 'total_dollar'],
+        //         [sequelize.literal('kontragent.name'), 'kontragent_name'],
+        //         [sequelize.literal('kontragent.phone_number'), 'kontragent_phone_number'],
+        //         [sequelize.literal('kontragent.id'), 'kontragent_id'],
+        //     ],
+        //     include: [
+        //         {model: KontagentModel, as: 'kontragent', required: false, attributes: []}
+        //     ],
+        //     where: query,
+        //     group: ['kontragent_id']
+        // });
         res.send(model)
     }
     dailyRasxodFun = async (sklad_id, datetime1, datetime2) => {

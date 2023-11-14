@@ -2,7 +2,7 @@ const { Model } = require('sequelize');
 const Sequelize = require('sequelize');
 const sequelize = require('../db/db-sequelize');
 const FirmaModel = require('./firma.model')
-const skladModel = require('./sklad.model')
+const skladModel = require('./sklad.model');
 
 class kontragentModel extends Model {
 
@@ -72,7 +72,7 @@ kontragentModel.init({
   timestamps: false,
   paranoid: true,
 });
-
+// kontragentModel.hasMany(KontragentRegisterModel, {as: 'kontragent_register', foreignKey: 'kontragent.id'})
 kontragentModel.belongsTo(FirmaModel, {as: 'firma', foreignKey: 'firma_id'})
 kontragentModel.belongsTo(skladModel, {as: 'sklad', foreignKey: 'sklad_id'})
 
