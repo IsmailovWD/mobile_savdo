@@ -75,21 +75,21 @@ InitialBalanceTableModel.init({
       type: DataTypes.DECIMAL(17,3),
       defaultValue: 0
   },
-  pack_count: {
-    type: DataTypes.DECIMAL(12,3),
-    allowNull: false,
-    defaultValue: 0
-  },
-  pack_price: {
-      type: DataTypes.DECIMAL(12,3),
-      allowNull: false,
-      defaultValue: 0
-  },
-  pack_norma: {
-      type: DataTypes.DECIMAL(12,3),
-      allowNull: false,
-      defaultValue: 0
-  },
+  // pack_count: {
+  //   type: DataTypes.DECIMAL(12,3),
+  //   allowNull: false,
+  //   defaultValue: 0
+  // },
+  // pack_price: {
+  //     type: DataTypes.DECIMAL(12,3),
+  //     allowNull: false,
+  //     defaultValue: 0
+  // },
+  // pack_norma: {
+  //     type: DataTypes.DECIMAL(12,3),
+  //     allowNull: false,
+  //     defaultValue: 0
+  // },
 }, {
   sequelize,
   tableName: 'initial_balance_table',
