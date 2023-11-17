@@ -23,9 +23,9 @@ exports.InitialBalanceScheme = {
             debit_summa: Joi.number().required(),
             chakana_dollar_price: Joi.number().required(),
             optom_dollar_price: Joi.number().required(),
-            pack_count: Joi.number().required(),
-            pack_price: Joi.number().required(),
-            pack_norma: Joi.number().required()
+            // pack_count: Joi.number().required(),
+            // pack_price: Joi.number().required(),
+            // pack_norma: Joi.number().required()
         }))
     }),
 };
