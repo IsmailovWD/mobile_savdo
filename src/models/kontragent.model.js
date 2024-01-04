@@ -74,6 +74,6 @@ kontragentModel.init({
 });
 // kontragentModel.hasMany(KontragentRegisterModel, {as: 'kontragent_register', foreignKey: 'kontragent.id'})
 kontragentModel.belongsTo(FirmaModel, {as: 'firma', foreignKey: 'firma_id'})
-kontragentModel.belongsTo(skladModel, {as: 'sklad', foreignKey: 'sklad_id'})
+// kontragentModel.belongsTo(skladModel, {as: 'sklad', foreignKey: 'sklad_id'})
 
 module.exports = kontragentModel;
