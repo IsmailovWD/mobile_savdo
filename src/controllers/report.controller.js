@@ -30,7 +30,7 @@ class KursController extends BaseController {
             `), 'residual'],
                 [sequelize.literal('`product`.`name`'), 'product_name'],
                 [sequelize.literal('`product`.`id`'), 'product_id'],
-                [sequelize.literal('`product`.`min_amount`'), 'product_min_amount']
+                [sequelize.literal('CASE WHEN `product`.`min_amount` IS NULL THEN 0 ELSE `product`.`min_amount` END'), 'product_min_amount']
             ],
             include: [
                 {

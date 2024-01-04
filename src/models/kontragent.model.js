@@ -43,16 +43,16 @@ kontragentModel.init({
         type: Sequelize.DataTypes.INTEGER,
         allowNull: true
     },
-    sklad_id: {
-        type: Sequelize.DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'sklad',
-          key: 'id'
-        },
-        onDelete: 'RESTRICT',
-        onUpdate: 'CASCADE',
-    },
+    // sklad_id: {
+    //     type: Sequelize.DataTypes.INTEGER,
+    //     allowNull: true,
+    //     references: {
+    //       model: 'sklad',
+    //       key: 'id'
+    //     },
+    //     onDelete: 'RESTRICT',
+    //     onUpdate: 'CASCADE',
+    // },
       comment: {
         type: Sequelize.DataTypes.STRING(50),
         allowNull: true

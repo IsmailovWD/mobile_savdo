@@ -9,7 +9,7 @@ exports.Kontragentscheme = {
       mfo_id: Joi.number().allow(null).max(9999999).allow(0),
       okonx: Joi.string().allow(null).max(15).allow(''),
       firma_id: Joi.number().allow(null),
-      sklad_id: Joi.number().required(),
+      // sklad_id: Joi.number().required(),
       comment: Joi.string().allow(null).max(50).allow('')
     }),
   };

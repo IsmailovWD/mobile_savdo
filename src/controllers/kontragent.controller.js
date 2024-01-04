@@ -59,7 +59,7 @@ class KontragentController extends BaseController {
                 "okonx",
                 "address",
                 "firma_id",
-                "sklad_id",
+                // "sklad_id",
                 "comment",
                 "deleted",
                 "deleted_at",
@@ -118,7 +118,7 @@ class KontragentController extends BaseController {
             if (req.body.okonx !== null) model.okonx = req.body.okonx;
             if (req.body.address !== null) model.address = req.body.address;
             if (req.body.firma_id !== null) model.firma_id = req.body.firma_id;
-            if (req.body.sklad_id !== null) model.sklad_id = req.body.sklad_id;
+            // if (req.body.sklad_id !== null) model.sklad_id = req.body.sklad_id;
             if (req.body.is_folder !== null) model.is_folder = req.body.is_folder;
             if (req.body.parent_id !== null) model.parent_id = req.body.parent_id;
             model.type = req.body.type;
