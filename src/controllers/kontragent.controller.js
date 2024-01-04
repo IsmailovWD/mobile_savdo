@@ -18,7 +18,7 @@ class KontragentController extends BaseController {
         let query = {}
         const sklad_id = req.query.sklad_id
         if (sklad_id) {
-            query.sklad_id = sklad_id
+            // query.sklad_id = sklad_id
         }
         let modelList = await KontragentModel.findAll({
             order: [
@@ -42,7 +42,7 @@ class KontragentController extends BaseController {
                 ['id', 'ASC']
             ],
             where: {
-                sklad_id: req.params.sklad_id
+                // sklad_id: req.params.sklad_id
             }
         });
         res.send(modelList);
