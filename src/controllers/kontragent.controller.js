@@ -64,11 +64,11 @@ class KontragentController extends BaseController {
                 "deleted",
                 "deleted_at",
                 [sequelize.literal('firma.name'), 'firma_name'],
-                [sequelize.literal('sklad.name'), 'sklad_name']
+                // [sequelize.literal('sklad.name'), 'sklad_name']
             ],
             include: [
                 { model: FirmaModel, as: 'firma', required: false, attributes: [] },
-                { model: SkladModel, as: 'sklad', required: false, attributes: [] }
+                // { model: SkladModel, as: 'sklad', required: false, attributes: [] }
             ],
             where: { id: req.params.id }
         });
