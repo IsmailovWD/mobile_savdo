@@ -60,14 +60,49 @@ class InitialBalanceController extends DocNumberController {
 
     getById = async (req, res, next) => {
         const model = await InitialBalanceModel.findOne({
+            attributes: [
+                "id",
+                "created_at",
+                "updated_at",
+                "sklad_id",
+                "user_id",
+                "summa",
+                "comment",
+                "count_all",
+                "dollar_rate",
+                "pay_type_id",
+                [sequelize.literal('`sklad`.`name`'), 'sklad_name'],
+                [sequelize.literal('`user`.`fullname`'), 'user_fullname'],
+            ],
             where:{ id: req.params.id },
             include: [
-                { model: InitialBalanceTableModel,as: 'initial_balance_table', 
+                { 
+                    attributes: [
+                        'id',
+                        'initial_balance_id',
+                        'product_id',
+                        'count',
+                        'debit_price',
+                        'chakana_percent',
+                        'optom_percent',
+                        'chakana_price',
+                        'optom_price',
+                        'chakana_summa',
+                        'optom_summa',
+                        'debit_summa',
+                        'shtrix_kod',
+                        'chakana_dollar_price',
+                        'optom_dollar_price',
+                        [sequelize.literal('`initial_balance_table->product`.`name`'), 'product_name'],
+                    ],
+                    model: InitialBalanceTableModel,
+                    as: 'initial_balance_table', 
                     include : [
-                        { model: ProductModel, as: 'product', attributes: ['name'], required: false}
+                        { model: ProductModel, as: 'product', attributes: [], required: false}
                     ]
                 },
-                { model: SkladModel,as: 'sklad', attributes : ['name'], required: false },
+                { model: SkladModel,as: 'sklad', attributes : [], required: false },
+                { model: UserModel, as: 'user', attributes : [], required: false },
             ],
             order:[
                 [ {model: InitialBalanceTableModel, as: 'initial_balance_table'}, 'id', 'ASC']
