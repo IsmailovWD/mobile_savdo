@@ -6,7 +6,7 @@ const BaseController = require('./BaseController');
 const { MyUser, MainUser, Admin, Programmer } = require('../utils/userRoles.utils');
 const { Op, QueryTypes } = require('sequelize');
 const moment = require('moment');
-const { chiqim, kirim } = require('../utils/docTypes.utils')
+const { chiqim, kirim,initial_balance } = require('../utils/docTypes.utils')
 const sequelize = require('../db/db-sequelize');
 const db = require('../db/db-sequelize')
 const _ = require('lodash');
@@ -25,6 +25,7 @@ class KursController extends BaseController {
                     CASE
                         WHEN \`doc_type\` = '${chiqim}' THEN -(\`count\`)
                         WHEN \`doc_type\` = '${kirim}' THEN (\`count\`)
+                        WHEN \`doc_type\` = '${initial_balance}' THEN (\`count\`)
                         ELSE 0 END
                 )
             `), 'residual'],
