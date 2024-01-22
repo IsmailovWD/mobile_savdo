@@ -38,7 +38,6 @@ class InitialBalanceController extends DocNumberController {
                 "summa",
                 "comment",
                 "count_all",
-                "number",
                 "dollar_rate",
                 "pay_type_id",
                 [sequelize.literal('`sklad`.`name`'), 'sklad_name'],
@@ -129,7 +128,6 @@ class InitialBalanceController extends DocNumberController {
             model.updated_at = initial_balance.updated_at;
             model.user_id = initial_balance.user_id;
             model.sklad_id = initial_balance.sklad_id;
-            model.summa = initial_balance.summa;
             model.comment = initial_balance.comment;
             model.count_all = initial_balance.count_all;
             model.number = initial_balance.number;
@@ -201,6 +199,7 @@ class InitialBalanceController extends DocNumberController {
             delete element.id;
             element.initial_balance_id = doc_id;
             let element_debit_price = await getProfitPrice(model.pay_type_id, element.debit_price, model.dollar_rate) ;
+            element_debit_price = element_debit_price ? element_debit_price : 0
             const series = await ProductController.findOrCreateSeries(
                     model.created_at, element.product_id, model.sklad_id, 
                     0, element_debit_price, element.optom_price, element.chakana_price, 

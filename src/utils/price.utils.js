@@ -10,17 +10,25 @@ exports.getProfitPrice = async (payType, price, dollar_rate) => {
     console.log(priceType)
     if(payType == payTypeUtils.Naqd || payType == payTypeUtils.Plastik)//so'm
     {
-        if(priceType == priceTypeUtils.Sum)//so'm
-        {
+        if(priceType){
+            if(priceType == priceTypeUtils.Sum)//so'm
+            {
+                return price;
+            }else {//Dollar
+                return price / dollar_rate;
+            }
+        }else{
             return price;
-        }else {//Dollar
-            return price / dollar_rate;
         }
     }else {//Dollar
-        if(priceType == priceTypeUtils.Sum)//so'm
-        {
-            return price * dollar_rate;
-        }else {//Dollar
+        if(priceType){
+            if(priceType == priceTypeUtils.Sum)//so'm
+            {
+                return price * dollar_rate;
+            }else {//Dollar
+                return price;
+            }
+        }else{
             return price;
         }
     }
