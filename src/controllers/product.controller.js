@@ -10,7 +10,7 @@ const moment = require('moment');
 const fs = require('fs');
 const db = require('../db/db-sequelize');
 const { db_name } = require('../startup/config')
-
+const { chiqim, kirim, initial_balance } = require('../utils/docTypes.utils')
 // Include models
 const unityModel = require('../models/unity.model');
 const product_categoryModel = require('../models/productcategory.model');
@@ -161,12 +161,13 @@ class SkladController extends BaseController {
         "color_id",
         "addition_name",
         // "sklad_id",
-        [literal("SUM( \
-          CASE \
-            WHEN `product_register`.`doc_type` = 'Кирим' THEN `product_register`.`count`\
-            WHEN `product_register`.`doc_type` = 'Чиқим' THEN -`product_register`.`count`\
-            ELSE 0 END\
-        )"), 'qoldiq'],       
+        [literal(`SUM( 
+          CASE 
+            WHEN \`product_register\`.\`doc_type\` = '${kirim}' THEN \`product_register\`.\`count\`
+            WHEN \`product_register\`.\`doc_type\` = '${chiqim}' THEN -\`product_register\`.\`count\`
+            WHEN \`product_register\`.\`doc_type\` = '${initial_balance}' THEN \`product_register\`.\`count\`
+            ELSE 0 END
+        )`), 'qoldiq'],       
         [literal('unity.name'), 'unity_name'],
       ],
       include: [
