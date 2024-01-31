@@ -20,6 +20,7 @@ const {ValidationError, literal} = require('sequelize');
 const actionTypeUtils = require('../utils/actionType.utils');
 const BaseController = require('./BaseController');
 const sequelize = require('../db/db-sequelize');
+const UnityModel = require('../models/unity.model');
 
 /******************************************************************************
  *                              Prixod Controller
@@ -136,12 +137,25 @@ class PrixodController extends BaseController{
                         "shtrix_kod",
                         "chakana_dollar_price",
                         "optom_dollar_price",
-                        [sequelize.literal('`prixod_table->product`.`name`'), 'product_name']
+                        [sequelize.literal('`prixod_table->product`.`name`'), 'product_name'],
+                        [sequelize.literal('`rasxod_table->product->unity`.`name`'), 'unity_name'],
                     ],
                     model: PrixodTableModel,
                     as: 'prixod_table', 
                     include : [
-                        { model: ProductModel, as: 'product', attributes: [], required: false}
+                        { 
+                            model: ProductModel, 
+                            as: 'product', 
+                            attributes: [], 
+                            required: false,
+                            include: [
+                                {
+                                    model: UnityModel,
+                                    as: 'unity',
+                                    attributes: []
+                                }
+                            ]
+                        }
                     ]
                 },
                 { model: SkladModel,as: 'sklad', attributes : [], required: false },

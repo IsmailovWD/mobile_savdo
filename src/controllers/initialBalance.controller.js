@@ -20,6 +20,7 @@ const actionTypeUtils = require('../utils/actionType.utils');
 const config = require('../startup/config');
 const db_sequelize = require('../db/db-sequelize');
 const sequelize = require('sequelize');
+const UnityModel = require('../models/unity.model');
 
 /******************************************************************************
  *                              InitialBalance Controller
@@ -94,11 +95,24 @@ class InitialBalanceController extends DocNumberController {
                         'chakana_dollar_price',
                         'optom_dollar_price',
                         [sequelize.literal('`initial_balance_table->product`.`name`'), 'product_name'],
+                        [sequelize.literal('`rasxod_table->product->unity`.`name`'), 'unity_name'],
                     ],
                     model: InitialBalanceTableModel,
                     as: 'initial_balance_table', 
                     include : [
-                        { model: ProductModel, as: 'product', attributes: [], required: false}
+                        { 
+                            model: ProductModel, 
+                            as: 'product', 
+                            attributes: [], 
+                            required: false,
+                            include: [
+                                {
+                                    model: UnityModel,
+                                    as: 'unity',
+                                    attributes: []
+                                }
+                            ]
+                        }
                     ]
                 },
                 { model: SkladModel,as: 'sklad', attributes : [], required: false },

@@ -22,6 +22,7 @@ const payTypeUtils = require('../utils/payType.utils');
 const UserModel = require('../models/user.model');
 const actionTypeUtils = require('../utils/actionType.utils');
 const PayTypeModel = require('../models/payType.model');
+const UnityModel = require('../models/unity.model');
 /******************************************************************************
  *                              Rasxod Controller
  ******************************************************************************/
@@ -121,14 +122,22 @@ class RasxodController extends DocNumberController {
                         "summa",
                         "shtrix_kod",
                         "current_balance",
-                        [sequelize.literal('`rasxod_table->product`.`name`'), 'product_name']
+                        [sequelize.literal('`rasxod_table->product`.`name`'), 'product_name'],
+                        [sequelize.literal('`rasxod_table->product->unity`.`name`'), 'unity_name'],
                     ],
                     include : [
                         { 
                             model: ProductModel, 
                             as: 'product', 
                             attributes: [], 
-                            required: false
+                            required: false,
+                            include: [
+                                {
+                                    model: UnityModel,
+                                    as: 'unity',
+                                    attributes: []
+                                }
+                            ]
                         }
                     ]
                 },
