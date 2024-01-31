@@ -21,6 +21,7 @@ const priceTypeUtils = require('../utils/priceType.utils');
 const payTypeUtils = require('../utils/payType.utils');
 const UserModel = require('../models/user.model');
 const actionTypeUtils = require('../utils/actionType.utils');
+const PayTypeModel = require('../models/payType.model');
 /******************************************************************************
  *                              Rasxod Controller
  ******************************************************************************/
@@ -82,15 +83,58 @@ class RasxodController extends DocNumberController {
 
     getById = async (req, res, next) => {
         const Rasxod = await RasxodModel.findOne({
+            attributes: [
+                "id",
+                "created_at",
+                "updated_at",
+                "sklad_id",
+                "kontragent_id",
+                "user_id",
+                "price_type",
+                "skidka_summa",
+                "summa",
+                "comment",
+                "cash_summa",
+                "plastic_summa",
+                "count_all",
+                "daily_number",
+                "dollar_rate",
+                "pay_type_id",
+                "dollar_summa",
+                "refund_money",
+                "refund_money_dollar",
+                [sequelize.literal('sklad.name'), 'sklad_name'],
+                [sequelize.literal('kontragent.name'), 'kontragent_name'],
+                [sequelize.literal('pay_type.name'), 'pay_type_name'],
+            ],
             where:{ id: req.params.id },
             include: [
-                { model: RasxodTableModel,as: 'rasxod_table', 
+                { 
+                    model: RasxodTableModel,
+                    as: 'rasxod_table', 
+                    attributes: [
+                        "id",
+                        "rasxod_id",
+                        "product_id",
+                        "count",
+                        "price",
+                        "summa",
+                        "shtrix_kod",
+                        "current_balance",
+                        [sequelize.literal('`rasxod_table->product`.`name`'), 'product_name']
+                    ],
                     include : [
-                        { model: ProductModel, as: 'product', attributes: ['name'], required: false}
+                        { 
+                            model: ProductModel, 
+                            as: 'product', 
+                            attributes: [], 
+                            required: false
+                        }
                     ]
                 },
-                { model: SkladModel,as: 'sklad', attributes : ['name'], required: false },
-                { model: KontragentModel, as: 'kontragent', attributes : ['name'], required: false },
+                { model: SkladModel,as: 'sklad', attributes : [], required: false },
+                { model: KontragentModel, as: 'kontragent', attributes : [], required: false },
+                { model: PayTypeModel, as: 'pay_type', attributes : [], required: false },
             ],
             order:[
                 [ {model: RasxodTableModel, as: 'rasxod_table'}, 'id', 'ASC']
