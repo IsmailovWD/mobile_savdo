@@ -95,7 +95,7 @@ class InitialBalanceController extends DocNumberController {
                         'chakana_dollar_price',
                         'optom_dollar_price',
                         [sequelize.literal('`initial_balance_table->product`.`name`'), 'product_name'],
-                        [sequelize.literal('`rasxod_table->product->unity`.`name`'), 'unity_name'],
+                        [sequelize.literal('`initial_balance_table->product->unity`.`name`'), 'unity_name'],
                     ],
                     model: InitialBalanceTableModel,
                     as: 'initial_balance_table', 

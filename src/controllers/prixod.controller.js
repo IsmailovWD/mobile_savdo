@@ -138,7 +138,7 @@ class PrixodController extends BaseController{
                         "chakana_dollar_price",
                         "optom_dollar_price",
                         [sequelize.literal('`prixod_table->product`.`name`'), 'product_name'],
-                        [sequelize.literal('`rasxod_table->product->unity`.`name`'), 'unity_name'],
+                        [sequelize.literal('`prixod_table->product->unity`.`name`'), 'unity_name'],
                     ],
                     model: PrixodTableModel,
                     as: 'prixod_table', 
