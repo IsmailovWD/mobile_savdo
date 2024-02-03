@@ -13,7 +13,8 @@ module.exports = {
           { 
             phone_number: '+998916544327',
             password: '$2a$08$YLZ7gtHc5KgiF3TlX/12r.boof4dIvGSoViUYxaRL8f7yHhKjPh0i', 
-            fullname: 'Dasturchi',  
+            fullname: 'Dasturchi',
+            sklad_id: 1, 
             role: `Programmer`,
             deletedAt: null
           } 
@@ -28,6 +29,7 @@ module.exports = {
             phone_number: '+998123456789',
             password: '$2a$08$YLZ7gtHc5KgiF3TlX/12r.boof4dIvGSoViUYxaRL8f7yHhKjPh0i', 
             fullname: 'Admin',  
+            sklad_id: 1, 
             role: `Admin`,
             deletedAt: null
           } 

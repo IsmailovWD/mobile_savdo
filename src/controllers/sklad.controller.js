@@ -44,6 +44,19 @@ class SkladController extends BaseController {
     await model.save()
     res.send(model)
   }
+  sklad_date_update = async (req, res) => {
+    const { secret_ID, date1, date2 } = req.body
+    const model = await SkladModel.findOne({
+      where: {
+        secret_id: secret_ID
+      }
+    })
+    if(!model) throw new HttpException(404, req.mf('data not found'))
+    model.date1 = date1
+    model.date2 = date2
+    await model.save()
+    res.send(model)
+  }
 }
 
 

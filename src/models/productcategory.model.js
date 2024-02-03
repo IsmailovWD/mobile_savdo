@@ -16,6 +16,10 @@ ProductcategoryModel.init({
         type: Sequelize.DataTypes.STRING(64),
         allowNull: false,
     },
+    img: {
+        type: Sequelize.DataTypes.STRING(256),
+        allowNull: true
+    }
 }, {
   sequelize,
   modelName: 'ProductcategoryModel',

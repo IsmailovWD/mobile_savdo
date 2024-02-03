@@ -7,5 +7,6 @@
 	"datetime2": "datetime2",
 	"This phone number is registered in the application": "Этот номер телефона зарегистрирован в приложении",
 	"The phone number is in the wrong format":"Номер телефона указан в неправильном формате",
-	"Incorrect login or password!":"Номер телефона или пароль неверный"
+	"Incorrect login or password!":"Номер телефона или пароль неверный",
+	"The program has expired": "Срок действия программы истек"
 }

@@ -8,5 +8,10 @@ exports.sklaScheme = {
   }),
   update: Joi.object({
     name: Joi.string().min(3).max(50),
+  }),
+  check: Joi.object({
+    secret_ID: Joi.string().min(3).max(50).required(),
+    date1: Joi.string().min(3).max(50).required(),
+    date2: Joi.string().min(3).max(50).required(),
   })
 };

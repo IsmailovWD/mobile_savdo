@@ -11,7 +11,8 @@ module.exports = {
         'sklad', 
         [ 
           { 
-            name: 'Asosiy sklad'
+            name: 'Asosiy sklad',
+            secret_id: 'MM0001'
           } 
         ], 
         { transaction }

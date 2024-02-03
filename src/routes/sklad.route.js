@@ -10,5 +10,6 @@ const {sklaScheme} = require('../middleware/validators/skladValidator.middleware
 router.get('/', auth(), awaitHandlerFactory(SkladController.getAll));
 router.post('/', auth(Role.Admin,Role.Programmer),joiMiddleware(sklaScheme.create), awaitHandlerFactory(SkladController.create));
 router.patch('/id/:id', auth(Role.Admin,Role.Programmer),joiMiddleware(sklaScheme.update), awaitHandlerFactory(SkladController.update));
+router.post('/check', joiMiddleware(sklaScheme.check), awaitHandlerFactory(SkladController.sklad_date_update));
 
 module.exports = router;
