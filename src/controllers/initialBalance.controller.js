@@ -175,7 +175,7 @@ class InitialBalanceController extends DocNumberController {
         try{
             //model.created_at = initial_balance.created_at;
             model.updated_at = initial_balance.updated_at;
-            model.user_id = initial_balance.user_id;
+            model.user_id = req.currentUser.id;
             model.sklad_id = initial_balance.sklad_id;
             model.comment = initial_balance.comment;
             model.count_all = initial_balance.count_all;

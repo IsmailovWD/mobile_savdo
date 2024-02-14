@@ -12,6 +12,7 @@ const actionTypeUtils = require('../utils/actionType.utils');
 const config = require('../startup/config');
 const db_sequelize = require('../db/db-sequelize');
 const sequelize = require('sequelize');
+const UserModel = require('../models/user.model');
 
 /******************************************************************************
  *                              KontragentInitial Controller
@@ -30,10 +31,12 @@ class KontragentInitialController extends DocNumberController {
                 "dollar_summa",
                 "comment",
                 "user_id",
-                [sequelize.literal("`sklad`.`name`"), 'sklad_name']
+                [sequelize.literal("`sklad`.`name`"), 'sklad_name'],
+                [sequelize.literal("`user`.`name`"), 'user_name']
             ],
             include : [
                 { model: SkladModel, as: 'sklad', attributes : [], required: false },
+                { model: UserModel, as: 'user', attributes : [], required: false },
             ],
             order: [
                 ['datetime', 'DESC'],
