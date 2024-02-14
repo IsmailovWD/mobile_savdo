@@ -10,9 +10,9 @@ const { InitialBalanceScheme } = require('../middleware/validators/initialBalanc
 
 router.get('/', auth(), awaitHandlerFactory(InitialBalanceController.getAll)); 
 router.get('/id/:id', auth(), awaitHandlerFactory(InitialBalanceController.getById));
-router.post('/', auth(Role.Admin, Role.Programmer), joiMiddleware(InitialBalanceScheme.createUpdate), awaitHandlerFactory(InitialBalanceController.create));
-router.patch('/id/:id', auth(Role.Admin, Role.Programmer), joiMiddleware(InitialBalanceScheme.createUpdate), awaitHandlerFactory(InitialBalanceController.update));
-router.delete('/id/:id', auth(Role.Admin, Role.Programmer), awaitHandlerFactory(InitialBalanceController.delete));
+router.post('/', auth(), joiMiddleware(InitialBalanceScheme.createUpdate), awaitHandlerFactory(InitialBalanceController.create));
+router.patch('/id/:id', auth(), joiMiddleware(InitialBalanceScheme.createUpdate), awaitHandlerFactory(InitialBalanceController.update));
+router.delete('/id/:id', auth(), awaitHandlerFactory(InitialBalanceController.delete));
 router.get('/last-number', auth(), awaitHandlerFactory(InitialBalanceController.lastDocNumber));
 
 module.exports = router;
