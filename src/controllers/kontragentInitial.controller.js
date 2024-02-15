@@ -32,7 +32,7 @@ class KontragentInitialController extends DocNumberController {
                 "comment",
                 "user_id",
                 [sequelize.literal("`sklad`.`name`"), 'sklad_name'],
-                [sequelize.literal("`user`.`name`"), 'user_name']
+                [sequelize.literal("`user`.`fullname`"), 'user_fullname']
             ],
             include : [
                 { model: SkladModel, as: 'sklad', attributes : [], required: false },
