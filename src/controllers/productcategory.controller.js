@@ -1,4 +1,5 @@
 const ProductcategoryModel = require('../models/productcategory.model')
+const ProductModel = require('../models/product.model')
 const HttpException = require('../utils/HttpException.utils');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -51,6 +52,19 @@ class SkladController extends BaseController {
       }
       console.log(`Fayl muvaffaqiyatli o'chirildi: ${img}`);
     });
+  }
+  delete = async (req, res) => {
+    const id = req.params.id
+    const auth = await ProductModel.findOne({where: {category_id: id}})
+    if(auth) throw new HttpException(505, "Bo'limni o'chirib bo'lmaydi.")
+    await ProductcategoryModel.destroy({
+      where: {
+        id
+      }
+    }).catch(err =>{
+      throw new HttpException(505, err)
+    })
+    res.send(req.mf('data has been deleted'))
   }
 }
 
