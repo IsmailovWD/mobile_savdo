@@ -151,7 +151,8 @@ class UserController extends BaseController {
             phone_number,
             fullname,
             password,
-            sklad_id
+            sklad_id,
+            is_admin
         } = req.body;
         let numberauth = phone_number
         numberauth = numberauth.replace(/\D/g, '');
@@ -195,6 +196,7 @@ class UserController extends BaseController {
         })
         if(!skladAuth) throw new HttpException(500, req.mf('Something went wrong'))
         model.sklad_id = sklad_id
+        model.role =  is_admin ? 'Admin' : 'Hodim'
         model.save();
 
         res.send(model);
