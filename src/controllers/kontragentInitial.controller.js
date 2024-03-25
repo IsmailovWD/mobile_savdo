@@ -58,7 +58,8 @@ class KontragentInitialController extends DocNumberController {
                 "dollar_summa",
                 "comment",
                 "user_id",
-                [sequelize.literal("`sklad`.`name`"), 'sklad_name']
+                [sequelize.literal("`sklad`.`name`"), 'sklad_name'],
+                [sequelize.literal("`user`.`fullname`"), 'user_fullname'],
             ],
             where:{ id: req.params.id },
             include : [
@@ -82,6 +83,7 @@ class KontragentInitialController extends DocNumberController {
                     ]
                 },
                 { model: SkladModel,as: 'sklad', attributes : [], required: false },
+                { model: UserModel,as: 'user', attributes : [] },
             ],
             order:[
                 [ {model: KontragentInitialTableModel, as: 'kontragent_initial_table'}, 'id', 'ASC']

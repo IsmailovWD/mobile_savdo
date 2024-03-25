@@ -14,7 +14,8 @@ router.get('/username/:username', auth(), awaitHandlerFactory(userController.get
 router.get('/whoami', auth(), awaitHandlerFactory(userController.getCurrentUser));
 router.post('/',auth(Role.Admin, Role.Programmer), joiMiddleware(userSchemas.create), awaitHandlerFactory(userController.create));
 router.patch('/', auth(), joiMiddleware(userSchemas.update), awaitHandlerFactory(userController.update));
-router.delete('/id/:id', auth(Role.Admin), awaitHandlerFactory(userController.delete));
+router.patch('/id/:id', auth(Role.Admin, Role.Programmer), joiMiddleware(userSchemas.update_user_admin), awaitHandlerFactory(userController.update_user));
+router.delete('/id/:id', auth(Role.Admin, Role.Programmer), awaitHandlerFactory(userController.delete));
 
 router.post('/login', joiMiddleware(userSchemas.login), awaitHandlerFactory(userController.userLogin));
 

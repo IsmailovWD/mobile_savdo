@@ -13,7 +13,7 @@ const sequelize = new Sequelize(
             decimalNumbers: true,
             multipleStatements: true
         },
-        logging: config.node_env !== 'production'
+        logging: (msg) => config.node_env === 'development' ? console.log(msg) : false
     }
 );
 

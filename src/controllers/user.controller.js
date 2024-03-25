@@ -61,16 +61,19 @@ class UserController extends BaseController {
             phone_number,
             fullname,
             password,
-            sklad_id
+            sklad_id,
+            is_admin
         } = req.body;
+        const checkNumber = await this.#phoneNumberCheck(phone_number)
+        if(!checkNumber) throw new HttpException(500, req.mf('This phone number is registered in the application'))
         try{
             const model = await UserModel.create({
                 phone_number,
                 fullname,
                 password,
                 sklad_id,
-                role: 'Hodim'
-            });
+                role: is_admin ? 'Admin' : 'Hodim'
+            })
     
             if (!model) {
                 throw new HttpException(500, req.mf('Something went wrong'));
@@ -78,7 +81,7 @@ class UserController extends BaseController {
     
             res.status(201).send(model);
         }catch(e){
-            throw new HttpException(500, req.mf('Something went wrong'))
+            throw new HttpException(500, req.mf(e.message))
         }
     };
 
@@ -140,12 +143,69 @@ class UserController extends BaseController {
         res.send(model);
     };
 
+    update_user = async (req, res) => {
+        this.checkValidation(req);
+
+        await this.hashPassword(req);
+        let { 
+            phone_number,
+            fullname,
+            password,
+            sklad_id
+        } = req.body;
+        let numberauth = phone_number
+        numberauth = numberauth.replace(/\D/g, '');
+        if(numberauth.length != 12){
+            throw new HttpException(400, req.mf('The phone number is in the wrong format'))
+        }else{
+            numberauth = "+" + numberauth
+        }
+        const model = await UserModel.findOne({ where: { id: req.params.id }} );
+
+        if (!model) {
+            throw new HttpException(404, req.mf('data not found'));
+        }
+        if(numberauth != model.phone_number){
+            const auth = await UserModel.findOne({
+                where:{
+                    id: {
+                        [Op.ne]: [MainUser, MyUser]
+                    },
+                    phone_number
+                }
+            })
+            if(auth) throw new HttpException(400, req.mf("This phone number is registered in the application"))
+            model.phone_number = numberauth;
+            const data = await this.#dateFormar()
+            const token = jwt.sign({ id: req.currentUser.id, phone: req.currentUser.phone_number.toString(), loginAt: data }, secret_jwt, {
+                expiresIn: '24h'
+            });
+    
+            model.token = token;
+            model.loginAt = data
+        }else{
+            model.token = ''
+        }
+        model.fullname = fullname;
+        if(password) model.password = password;
+        const skladAuth = await SkladModel.findOne({
+            where: {
+                id: sklad_id
+            }
+        })
+        if(!skladAuth) throw new HttpException(500, req.mf('Something went wrong'))
+        model.sklad_id = sklad_id
+        model.save();
+
+        res.send(model);
+    }
+
     delete = async (req, res, next) => {
         const model = await UserModel.findOne({ where : 
             { 
                 id: req.params.id,
                 [Op.and]: [
-                    {role : {[Op.ne]: Admin}},
+                    // {role : {[Op.ne]: Admin}},
                     {role : {[Op.ne]: Programmer}}
                 ]
             }
@@ -158,13 +218,11 @@ class UserController extends BaseController {
         if (model.id === MainUser) {
             throw new HttpException(400, req.mf('This item cannot be deleted'));
         }
-        return res.send(req.mf('data has been deleted'));
         try {
             await model.destroy({ force: true });
         } catch (error) {
             await model.destroy();
         }
-
         res.send(req.mf('data has been deleted'));
     };
 
@@ -226,6 +284,15 @@ class UserController extends BaseController {
         const seconds = await String(date.getSeconds()).padStart(2, "0");
         const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
         return formattedDate
+    }
+    #phoneNumberCheck = async (number) => {
+        const user = await UserModel.findOne({
+            where: {
+                phone_number: number
+            }
+        })
+        if (!user) return true
+        return false
     }
 }
 
